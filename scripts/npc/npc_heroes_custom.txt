@@ -386,14 +386,14 @@
 	//=================================================================================================================
 	// HERO: Witch Doctor (Lich)
 	//=================================================================================================================
-	"npc_dota_hero_witch_doctor_lua"
-	{
-		"override_hero"					"npc_dota_hero_witch_doctor"	// Hero to override
-		"Ability1"				"lich_frost_blast_lua"						// Ability 1
-		"Ability2"				"lich_frost_armor_lua"						// Ability 2
-		"Ability3"				"lich_sacrifice_lua"						// Ability 2
-		"Ability6"				"lich_chain_frost_lua"							// Ability 6
-	}
+	//"npc_dota_hero_witch_doctor_lua"
+	//{
+	//	"override_hero"					"npc_dota_hero_witch_doctor"	// Hero to override
+	//	"Ability1"				"lich_frost_blast_lua"						// Ability 1
+	//	"Ability2"				"lich_frost_armor_lua"						// Ability 2
+	//	"Ability3"				"lich_sacrifice_lua"						// Ability 2
+	//	"Ability6"				"lich_chain_frost_lua"							// Ability 6
+	//}
 
 	//=================================================================================================================
 	// HERO: Ember Spirit (Lifestealer)
@@ -920,3 +920,5 @@
 #base "heroes/riven.txt"			// Juggernaut
 #base "heroes/sona.txt"				// Naga Siren
 #base "heroes/sandra_olivia.txt"	// Phantom Assassin
+#base "heroes/huatuo.txt"           // 华佗（巫医）
+#base "heroes/pangtong.txt"			// 庞统（凤凰）

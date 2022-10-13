@@ -1,0 +1,581 @@
+
+ #CombinationRankButton{
+
+     horizontal-align: right;
+     vertical-align: top;
+     margin-right: 210px;
+     background-color: gradient( linear, 0% 0%, 0% 100%, from( #e0c59a ), to( #ae9249 ) );
+ }
+
+ #CombinationRankButton:hover{
+
+  background-color: gradient( linear, 0% 0%, 0% 100%, from( #f7d9aa ), to( #d1af58 ) );
+ }
+
+ #CombinationRankButton:active{
+
+  background-color: gradient( linear, 0% 100%, 0% 0%, from( #f7d9aa ), to( #d1af58 ) );
+ }
+
+ #CombinationRankButton Label{
+
+     color: white;
+ }
+
+
+ #CombinationRankPanel{
+
+     width: 450px;
+
+     min-height: 200px;
+     horizontal-align: right;
+     vertical-align: top;
+     margin-right: 60px;
+     margin-top: 35px;
+     z-index: 30;
+
+     background-color: #181818ee;
+     border-radius: 12px;
+     box-shadow: #00000055 -4px -4px 8px 8px;
+
+     opacity: 0.0;
+     transform: translateX( 0px ) translateY( -40px );
+
+     transition-property: opacity, transform;
+  transition-duration: 0.2s;
+ }
+
+ #CombinationLoading{
+
+     horizontal-align: middle;
+     vertical-align: middle;
+     visibility: collapse;
+ }
+
+ #CombinationRankPanel.Loading #CombinationLoading{
+
+     visibility: visible;
+ }
+
+ #CombinationRankPanel.RankPanelVisible{
+
+  opacity: 1.0;
+  transform: translateX( 0px ) translateY( 0px );
+ }
+
+ .CombinationRank{
+
+     width: 100%;
+     max-height: 800px;
+     flow-children: down;
+     overflow:  squish scroll;
+
+     transition-property: opacity, transform;
+  transition-duration: 0.2s;
+ }
+
+ .CombinationRankHeader{
+
+     flow-children: right;
+     horizontal-align: middle;
+ }
+
+ .CombinationRow{
+
+     width:100%;
+     height: 120px;
+     flow-children: right;
+     border-bottom: 2px solid black;
+  box-shadow: none;
+ }
+
+ .CombinationRow .RankEconItemSlot{
+
+     width: 54px;
+     height: 54px;
+ }
+
+ .CombinationRow:hover{
+
+  background-color: gradient( linear, 100% 0%, 0% 0%, from( #424a4f00 ), to( #78868f77 ) );
+ }
+
+ .CombinationRow.Selected{
+
+  background-color: gradient( linear, 100% 0%, 0% 0%, from( #424a4f00 ), to( #424a4fff ) );
+  border-left-color: #c8e7e7;
+  border-left-style: solid;
+  border-left-width: 4px;
+ }
+
+ .LoadMore{
+
+  height: 48px;
+  vertical-align: center;
+ }
+
+ #ComLeftPanel{
+
+     height: 100%;
+     width: 15%;
+     flow-children: down;
+     margin-left: 10px;
+     margin-top: 20px;
+ }
+
+ #ComRankNum{
+
+     width: 100%;
+     height: 50%;
+ }
+
+ #ComRankNum Label{
+
+     horizontal-align: middle;
+     vertical-align: center;
+     color: dotaPlusLightGold;
+     font-size: 24px;
+     letter-spacing: 2px;
+     font-weight: bold;
+     text-shadow: 0px 0px 4px dotaPlusLightGold;
+     margin-top: 10px;
+ }
+
+ .CombinationEconItems{
+
+     width: 61%;
+     height: 100%;
+     flow-children: right-wrap;
+ }
+
+ .CombinationRow #CombinationVote{
+
+     vertical-align: middle;
+     horizontal-align:middle;
+     text-overflow: clip;
+ }
+
+ .CombinationVotePanel{
+
+     vertical-align: middle;
+     horizontal-align:middle;
+     flow-children: down;
+ }
+
+ #VoteUpButton{
+
+     flow-children: right;
+     tooltip-position: top;
+     margin-bottom: 20px;
+  tooltip-body-position: 50% 50%;
+     tooltip-arrow-position: 50% 50%;
+ }
+
+
+ #VoteUpButton:hover{
+
+     brightness: 2;
+ }
+
+ .VoteIcon{
+
+     height: 20px;
+     width: 20px;
+
+     margin-right: 5px;
+     horizontal-align:left;
+     wash-color: #7595B5;
+ }
+
+
+ .Voted .CombinationVotePanel #VoteUpButton .VoteIcon{
+
+     wash-color: #A4E84A;
+ }
+
+ .VoteLabel{
+
+     color: white;
+ }
+
+ #CommentButton{
+
+     flow-children: right;
+     tooltip-position: top;
+     margin-bottom: 10px;
+  tooltip-body-position: 50% 50%;
+     tooltip-arrow-position: 50% 50%;
+ }
+
+ .LoadMore{
+
+     width:100%;
+     height: 50px;
+ }
+
+ #LoadMoreContainer{
+
+  vertical-align: center;
+  horizontal-align: center;
+
+  width: 100%;
+  height: 50%;
+
+  wash-color: #c8e7e7;
+
+  visibility: collapse;
+ }
+
+ .LoadMore #LoadMoreContainer{
+
+  visibility: visible;
+ }
+
+ #LoadMoreInner,#LoadMorePending{
+
+
+  height: 100%;
+
+  flow-children: right;
+
+  horizontal-align: center;
+ }
+
+ .Pending #LoadMoreInner,#LoadMorePending{
+
+
+  visibility: collapse;
+ }
+
+ .Pending #LoadMorePending{
+
+  visibility: visible;
+ }
+
+ .WaitPip{
+
+  width: 8px;
+  height: 8px;
+
+  margin-left: 4px;
+  margin-right: 4px;
+
+  horizontal-align: center;
+  vertical-align: center;
+
+  animation-name: PipCycle;
+  animation-duration: 1.0s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+ }
+
+ @keyframes 'PipCycle'{
+
+  0%{
+
+   box-shadow: baseText -0.4px -0.4px 1px 1px;
+  }
+
+  50%{
+
+   box-shadow: baseText -1.5px -1.5px 4px 4px;
+  }
+
+  100%{
+
+   box-shadow: baseText -0.4px -0.4px 1px 1px;
+  }
+ }
+
+ #ListWaitPip1{
+
+  animation-delay: 0.0s;
+ }
+
+ #ListWaitPip2{
+
+  animation-delay: 0.1s;
+ }
+
+ #ListWaitPip3{
+
+  animation-delay: 0.2s;
+ }
+
+ #ListWaitPip4{
+
+  animation-delay: 0.3s;
+ }
+
+ #RankMultiStyle{
+
+  width: 100%;
+  height: 32%;
+  background-color: #000d;
+  vertical-align: bottom;
+  margin: 12%;
+  flow-children: right;
+ }
+
+
+ #RankMultiStyleIcon{
+
+     width: 30%;
+  height: 100%;
+
+  vertical-align: middle;
+
+     background-image: url("s2r://panorama/images/control_icons/icon_multiple_styles_png.vtex");
+  background-size: contain;
+  background-repeat: no-repeat;
+
+  margin-left: 3px;
+  margin-bottom: 1px;
+ }
+
+ #RankSelectStyle{
+
+     font-size: 15px;
+  vertical-align: middle;
+
+
+  margin-left: 2px;
+  width: fill-parent-flow( 1.0 );
+  text-align: left;
+  text-overflow: shrink;
+  color: #999;
+ }
+
+ #CommentPanel{
+
+     width: 100%;
+
+     max-height: 800px;
+     flow-children: down;
+     overflow:  squish scroll;
+     opacity: 0.0;
+     transform: translateX( 400px ) translateY( 0px );
+
+     horizontal-align: right;
+  flow-children: down;
+  padding: 16px;
+
+
+
+  border-top: 1px solid commentsBorderColor;
+     border-bottom: 1px solid commentsBorderColor;
+
+     transition-property: opacity, transform;
+  transition-duration: 0.2s;
+ }
+
+ #CombinationRankPanel.CommentPanelVisible #CommentPanel{
+
+     opacity: 1.0;
+     z-index: 40;
+  transform: translateX( 0px ) translateY( 0px );
+ }
+
+ #CombinationRankPanel.CommentPanelVisible .CombinationRank{
+
+     opacity: 0.0;
+     z-index: 40;
+  transform: translateX( 0px ) translateY( 0px );
+ }
+
+
+ #CommentTextEntryContainer{
+
+  margin-top: 15px;
+  width: 100%;
+  flow-children: right;
+ }
+
+ #CommentTextEntryAvatarImage{
+
+  width: 34px;
+  height: 34px;
+  margin-right: 5px;
+ }
+
+ #CommentsStatusLoading,#CommentsStatusNone{
+
+
+  visibility: collapse;
+  visibility: collapse;
+
+  text-align: center;
+  width: 100%;
+  margin-top: 230px;
+  color: #546C7F;
+ }
+
+ .CommentsStatusLoading #CommentsStatusLoading{
+
+  visibility: visible;
+ }
+
+ .CommentsStatusNone #CommentsStatusNone{
+
+  visibility: visible;
+ }
+
+ .CommentsStatusLoading #Comments{
+
+  visibility: collapse;
+ }
+
+ #Comments{
+
+  margin-top: 10px;
+  width: 100%;
+  flow-children: down;
+  overflow: clip scroll;
+ }
+
+ #GoodComments{
+
+  margin-top: 10px;
+  width: 100%;
+  flow-children: down;
+  overflow: clip scroll;
+  padding-bottom: 16px;
+ }
+
+ #RecentComments{
+
+  margin-top: 10px;
+  width: 100%;
+  flow-children: down;
+  overflow: clip scroll;
+ }
+
+ .CommentType{
+
+     color: white;
+ }
+
+ #UserName Label{
+
+     color: gray;
+     text-decoration: none;
+ }
+
+ #CommentTextEntry{
+
+  width: 100%;
+  height: 34px;
+ }
+
+ #PlaceholderText{
+
+  height: 100%;
+  padding-top: 2px;
+ }
+
+ .Comment{
+
+  width: 100%;
+  margin-top: 15px;
+  flow-children: down;
+  border-bottom: 1px solid #595B5E55;
+ }
+
+ #CommentAvatarImage{
+
+  width: 34px;
+  height: 34px;
+  margin-right: 5px;
+  margin-top: 3px;
+ }
+
+ Panel.CommentWho{
+
+     flow-children: right;
+     width: 100%;
+ }
+
+ Panel.CommentWhoWords{
+
+  flow-children: down;
+ }
+
+ Label.CommentPersonaName{
+
+  font-size: 18px;
+  color: #a6bebdff;
+ }
+
+ Label.CommentPersonaName:hover{
+
+  color: #ffffffff;
+ }
+
+ Label.CommentTimestamp{
+
+  font-size: 12px;
+  color: #858d82ff;
+ }
+
+ Label.CommentText{
+
+  margin-top: 10px;
+  margin-bottom: 15px;
+  font-size: 16px;
+  width: 320px;
+ }
+
+ #CommendCommentButton{
+
+     horizontal-align: right;
+     flow-children: right;
+ }
+
+ .Voted .CommentWho #CommendCommentButton .VoteIcon{
+
+     wash-color: #A4E84A;
+ }
+
+ .CommentHeader{
+
+     width:100%;
+     height: 120px;
+     flow-children: right;
+
+  box-shadow: none;
+ }
+
+ .CommentHeader .RankEconItemSlot{
+
+     width: 54px;
+     height: 54px;
+ }
+
+ #CommentHeaderEconItems{
+
+
+     width: 70%;
+     height: 100%;
+     flow-children: right-wrap;
+ }
+
+ #CommentHeaderEconItems:hover{
+
+  background-color: gradient( linear, 100% 0%, 0% 0%, from( #424a4f00 ), to( #78868f77 ) );
+ }
+
+ #BackButton{
+
+     width: 30px;
+     height: 30px;
+     horizontal-align: right;
+     vertical-align: middle;
+ }
+
+ #StreamHTML{
+
+     horizontal-align: middle;
+     vertical-align: middle;
+     width: 1500px;
+     height: 800px;
+}

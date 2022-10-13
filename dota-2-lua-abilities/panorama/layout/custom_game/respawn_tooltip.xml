@@ -1,0 +1,192 @@
+<!-- xml reconstructed by ValveResourceFormat: https://vrf.steamdb.info/ -->
+<root>
+	<styles>
+		<include src="s2r://panorama/styles/dotastyles.vcss_c" />
+		<include src="s2r://panorama/styles/custom_game/respawn_tooltip.vcss_c" />
+	</styles>
+	<scripts />
+	<Panel class="RespawnTooltip TooltipContainer LeftArrowVisible">
+		<Panel id="Contents">
+			<Panel class="HeaderRow">
+				<Panel class="HeaderColumn">
+					<Label class="Middle HeaderLabel" text="#Respawn_Button" />
+				</Panel>
+				<Panel class="Column">
+					<Label class="Middle HeaderLabel" text="#RespawnClose" />
+				</Panel>
+				<Panel class="Column">
+					<Label class="Middle HeaderLabel" text="#RespawnOpen" />
+				</Panel>
+			</Panel>
+			<Panel class="Row">
+				<Panel class="HeaderColumn">
+					<Panel class="Middle">
+						<Panel class="ModifierIcon particle_create" />
+						<Label text="#DOTA_tooltip_econ_item_modifier_ambient_effects" />
+					</Panel>
+				</Panel>
+				<Panel class="Column">
+					<Panel class="CheckBox" />
+					<Panel class="Support" />
+				</Panel>
+				<Panel class="Column">
+					<Panel class="CheckBox" />
+					<Panel class="Support" />
+				</Panel>
+			</Panel>
+			<Panel class="Row">
+				<Panel class="HeaderColumn">
+					<Panel class="Middle">
+						<Panel class="ModifierIcon activity" />
+						<Label text="#DOTA_tooltip_econ_item_modifier_animation" />
+					</Panel>
+				</Panel>
+				<Panel class="Column">
+					<Panel class="CheckBox" />
+					<Panel class="Support" />
+				</Panel>
+				<Panel class="Column">
+					<Panel class="CheckBox" />
+					<Panel class="Support" />
+				</Panel>
+			</Panel>
+			<Panel class="Row">
+				<Panel class="HeaderColumn">
+					<Panel class="Middle">
+						<Panel class="ModifierIcon model" />
+						<Label text="#DOTA_tooltip_econ_item_modifier_model" />
+					</Panel>
+				</Panel>
+				<Panel class="Column">
+					<Panel class="CheckBox" />
+					<Panel class="Support" />
+				</Panel>
+				<Panel class="Column">
+					<Panel class="CheckBox" />
+					<Panel class="Support" />
+				</Panel>
+			</Panel>
+			<Panel class="Row">
+				<Panel class="HeaderColumn">
+					<Panel class="Middle">
+						<Panel class="ModifierIcon particle" />
+						<Label text="#AttackProjectile" />
+					</Panel>
+				</Panel>
+				<Panel class="Column">
+					<Panel class="CheckBox" />
+					<Panel class="Support" />
+				</Panel>
+				<Panel class="Column">
+					<Panel class="CheckBox" />
+					<Panel class="Support" />
+				</Panel>
+			</Panel>
+			<Panel class="Row">
+				<Panel class="HeaderColumn">
+					<Panel class="Middle">
+						<Panel class="ModifierIcon particle" />
+						<Label text="#DOTA_tooltip_econ_item_modifier_spell_effects" />
+					</Panel>
+				</Panel>
+				<Panel class="Column">
+					<Panel class="CheckBox" />
+				</Panel>
+				<Panel class="Column">
+					<Panel class="CheckBox" />
+					<Panel class="Support" />
+				</Panel>
+			</Panel>
+			<Panel class="Row">
+				<Panel class="HeaderColumn">
+					<Panel class="Middle">
+						<Panel class="ModifierIcon particle_create" />
+						<Label text="#ParticleSnapshot" />
+					</Panel>
+				</Panel>
+				<Panel class="Column">
+					<Panel class="CheckBox" />
+				</Panel>
+				<Panel class="Column">
+					<Panel class="CheckBox" />
+					<Panel class="Support" />
+				</Panel>
+			</Panel>
+			<Panel class="Row">
+				<Panel class="HeaderColumn">
+					<Panel class="Middle">
+						<Panel class="ModifierIcon custom_kill_effect" />
+						<Label text="#DOTA_tooltip_econ_item_modifier_kill_effects" />
+					</Panel>
+				</Panel>
+				<Panel class="Column">
+					<Panel class="CheckBox" />
+				</Panel>
+				<Panel class="Column">
+					<Panel class="CheckBox" />
+					<Panel class="Support" />
+				</Panel>
+			</Panel>
+			<Panel class="Row">
+				<Panel class="HeaderColumn">
+					<Panel class="Middle">
+						<Panel class="ModifierIcon sound" />
+						<Label text="#DOTA_tooltip_econ_item_modifier_sound" />
+					</Panel>
+				</Panel>
+				<Panel class="Column">
+					<Panel class="CheckBox" />
+				</Panel>
+				<Panel class="Column">
+					<Panel class="CheckBox" />
+					<Panel class="Support" />
+				</Panel>
+			</Panel>
+			<Panel class="Row">
+				<Panel class="HeaderColumn">
+					<Panel class="Middle">
+						<Panel class="ModifierIcon icon_replacement" />
+						<Label text="#DOTA_tooltip_econ_item_modifier_icon" />
+					</Panel>
+				</Panel>
+				<Panel class="Column">
+					<Panel class="CheckBox" />
+				</Panel>
+				<Panel class="Column">
+					<Panel class="CheckBox" />
+					<Panel class="Support" />
+				</Panel>
+			</Panel>
+			<Panel class="Row">
+				<Panel class="HeaderColumn">
+					<Panel class="Middle">
+						<Panel class="ModifierIcon style" />
+						<Label text="#StyleSelection" />
+					</Panel>
+				</Panel>
+				<Panel class="Column">
+					<Panel class="CheckBox" />
+					<Panel class="Support" />
+				</Panel>
+				<Panel class="Column">
+					<Panel class="CheckBox" />
+				</Panel>
+			</Panel>
+			<Panel class="Row">
+				<Panel class="HeaderColumn">
+					<Panel class="Middle">
+						<Panel class="ModifierIcon gem" />
+						<Label text="#DOTA_Item_Prismatic_Gem" />
+					</Panel>
+				</Panel>
+				<Panel class="Column">
+					<Panel class="CheckBox" />
+					<Panel class="Support" />
+				</Panel>
+				<Panel class="Column">
+					<Panel class="CheckBox" />
+				</Panel>
+			</Panel>
+		</Panel>
+	</Panel>
+</root>

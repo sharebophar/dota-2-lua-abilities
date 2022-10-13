@@ -1,0 +1,99 @@
+.RespawnTooltip{
+
+     width: 500px;
+     height: 100%;
+     margin-top: 200px;
+     margin-left: 170px;
+}
+
+ #Contents{
+
+     background-color:  gradient( linear, 0% 0%, 0% 100%, from( #2d2d2d ), to( #2d2d2d ) );
+     width: 100%;
+
+     flow-children: down;
+     border: 2px solid black;
+     box-shadow: #00000066 -4px -4px 8px 8px;
+ }
+
+ .HeaderLabel{
+
+     font-size: 22px;
+     color: white;
+ }
+
+ .HeaderRow{
+
+     height: 50px;
+     width: 100%;
+     flow-children: right;
+ }
+
+ .Row{
+
+     flow-children: right;
+     height: 35px;
+     width: 100%;
+     margin: 2px;
+ }
+
+ .HeaderColumn{
+
+     Width: 40%;
+     height: 100%;
+ }
+
+ .ModifierIcon.style{
+
+  background-image: url("s2r://panorama/images/control_icons/icon_multiple_styles_png.vtex");
+ }
+
+ .ModifierIcon.gem{
+
+  background-image: url("s2r://panorama/images/control_icons/socket_rare_png.vtex");
+ }
+
+ .Column{
+
+     Width: 30%;
+     height: 100%;
+ }
+
+ Label{
+
+     vertical-align: middle;
+ }
+
+ .Middle{
+
+     horizontal-align: middle;
+     vertical-align: middle;
+     flow-children: right;
+ }
+
+ .CheckBox{
+
+  margin: 8px 14px;
+  width: 18px;
+  height: 18px;
+  border: 2px solid white;
+     background-color: black;
+     horizontal-align: middle;
+     vertical-align: middle;
+ }
+
+ .Support{
+
+  width: 22px;
+  height: 22px;
+
+  vertical-align: middle;
+  horizontal-align: center;
+
+  wash-color: rgb(110, 238, 110);
+
+  background-image: url("s2r://panorama/images/control_icons/check_png.vtex");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+}

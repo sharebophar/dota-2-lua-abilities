@@ -1,0 +1,369 @@
+<!-- xml reconstructed by ValveResourceFormat: https://vrf.steamdb.info/ -->
+<root>
+	<styles>
+		<include src="s2r://panorama/styles/dotastyles.vcss_c" />
+		<include src="s2r://panorama/styles/hud/hud_reborn.vcss_c" />
+		<include src="s2r://panorama/styles/ui_econ_item.vcss_c" />
+		<include src="s2r://panorama/styles/context_menus/context_menu_econ_item_style.vcss_c" />
+		<include src="s2r://panorama/styles/popups/popup_settings.vcss_c" />
+		<include src="s2r://panorama/styles/custom_game/hud_hero_demo.vcss_c" />
+		<include src="s2r://panorama/styles/custom_game/rank.vcss_c" />
+		<include src="s2r://panorama/styles/custom_game/econ.vcss_c" />
+	</styles>
+	<scripts>
+		<include src="s2r://panorama/scripts/custom_game/util.vjs_c" />
+		<include src="s2r://panorama/scripts/custom_game/selection.vjs_c" />
+		<include src="s2r://panorama/scripts/custom_game/hud_hero_demo.vjs_c" />
+		<include src="s2r://panorama/scripts/custom_game/event_callback.vjs_c" />
+		<include src="s2r://panorama/scripts/custom_game/camera.vjs_c" />
+		<include src="s2r://panorama/scripts/custom_game/gem.vjs_c" />
+		<include src="s2r://panorama/scripts/custom_game/rank.vjs_c" />
+		<include src="s2r://panorama/scripts/custom_game/econ.vjs_c" />
+	</scripts>
+	<snippets>
+		<snippet name="EconItemSlot">
+			<Panel class="EconItemSlot">
+				<Label id="SlotName" text="{s:slot_name}" />
+			</Panel>
+		</snippet>
+		<snippet name="CourierSelectorContainer">
+			<Panel>
+				<Panel id="FlySelectorContainer">
+					<Button class="FlySelector Ground" onactivate="SwitchCourierFly(false)" />
+					<Button class="FlySelector Fly" onactivate="SwitchCourierFly(true)" />
+				</Panel>
+				<Panel id="TeamSelectorContainer">
+					<Button class="TeamSelector Radiant" onactivate="SwitchCourierTeam(false)" />
+					<Button class="TeamSelector Dire" onactivate="SwitchCourierTeam(true)" />
+				</Panel>
+			</Panel>
+		</snippet>
+		<snippet name="TinyModelButtons">
+			<Panel>
+				<Panel id="ModelButtons">
+					<RadioButton group="Model" id="Model1" text="1" onactivate="SwitchTinyModel(1)" />
+					<RadioButton group="Model" id="Model2" text="2" onactivate="SwitchTinyModel(2)" />
+					<RadioButton group="Model" id="Model3" text="3" onactivate="SwitchTinyModel(3)" />
+					<RadioButton group="Model" id="Model4" text="4" onactivate="SwitchTinyModel(4)" />
+				</Panel>
+			</Panel>
+		</snippet>
+		<snippet name="EconItemContainer">
+			<Panel class="EconItemContainer">
+				<Panel id="EquipItemContainer">
+					<Label id="PleaseSelectWearableUnit" text="#PleaseSelectWearableUnit" />
+				</Panel>
+				<Panel id="AvailableItems">
+					<Panel id="AvailableHeader">
+						<Label id="AvailableTitle" text="#DOTA_HeroLoadout_AvailableItems" />
+						<Panel class="FillWidth" />
+						<Panel id="VoteButton" class="SourceButton" onactivate="Vote()" onmouseover="UIShowTextTooltip( #SubmitCombinationTooltip )" onmouseout="UIHideTextTooltip()">
+							<Label class="SourceLabel" text="#SubmitCombination" />
+						</Panel>
+					</Panel>
+					<Panel class="Row">
+						<Panel id="Bundle" class="SourceButton">
+							<Panel id="SourceIconContainer">
+								<Panel id="SourceIconArrow" />
+								<Panel id="SourceIcon" />
+							</Panel>
+							<Label class="SourceLabel" text="#bundle" />
+						</Panel>
+						<Panel id="Single" class="SourceButton SourceButtonDisabled" onmouseover="UIShowTextTooltip( #SingleItemTooptip )" onmouseout="UIHideTextTooltip()">
+							<Panel id="SourceIconContainer">
+								<Panel id="SourceIconArrow" />
+								<Panel id="SourceIcon" />
+							</Panel>
+							<Label class="SourceLabel" text="#DOTA_Workshop_Tags_SingleItem" />
+						</Panel>
+					</Panel>
+					<Panel id="AvailableItemsCarousel" />
+				</Panel>
+			</Panel>
+		</snippet>
+		<snippet name="EconItemStyleContextMenu">
+			<Panel class="EconItemStyleContents Hidden">
+				<Panel id="Header">
+					<Label id="StylesTitle" class="Title" text="#DOTA_econ_item_details_styles_header" />
+					<Panel class="FillWidth" />
+				</Panel>
+				<Panel id="StylesList" />
+			</Panel>
+		</snippet>
+		<snippet name="StyleEntry">
+			<Panel class="StyleEntry">
+				<Panel class="StyleEntryIcon" />
+				<Label id="StyleLabel" text="{s:style_name}" />
+			</Panel>
+		</snippet>
+		<snippet name="PrismaticItem">
+			<Panel class="PrismaticItem">
+				<Panel id="PrismaticEquipped" hittest="false" />
+				<DOTAEconItem id="EconItem" class="DisableInspect" itemdef="3001" onmouseover="Nothing()" onmouseout="Nothing()" />
+				<Panel class="PrismaticLabels">
+					<Label id="PrismaticName" text="#DOTA_Item_Prismatic_Gem" />
+					<Label id="PrismaticColor" text="(0, 0, 0)" />
+				</Panel>
+			</Panel>
+		</snippet>
+		<snippet name="EtherealItem">
+			<Panel class="EtherealItem">
+				<Panel id="EtherealEquipped" hittest="false" />
+				<DOTAEconItem id="EconItem" class="DisableInspect" itemdef="3000" onmouseover="Nothing()" onmouseout="Nothing()" />
+				<Label id="EtherealName" text="#DOTA_Item_Ethereal_Gem" />
+			</Panel>
+		</snippet>
+		<snippet name="LoadMore">
+			<Panel>
+				<Panel id="LoadMoreContainer">
+					<Panel id="LoadMoreInner">
+						<Image class="DownArrow" />
+						<Label id="LoadMoreLabel" text="#DOTA_WatchLive_Game_LoadMore" />
+						<Image class="DownArrow" />
+					</Panel>
+					<Panel id="LoadMorePending">
+						<Panel class="WaitPip" id="ListWaitPip1" />
+						<Panel class="WaitPip" id="ListWaitPip2" />
+						<Panel class="WaitPip" id="ListWaitPip3" />
+						<Panel class="WaitPip" id="ListWaitPip4" />
+					</Panel>
+				</Panel>
+			</Panel>
+		</snippet>
+		<snippet name="CombinationVotePanel">
+			<Panel class="CombinationVotePanel">
+				<Button id="VoteUpButton" onmouseover="UIShowTextTooltip( #DOTA_Custom_Game_Vote_Up )" onmouseout="UIHideTextTooltip()">
+					<Image class="VoteIcon" src="s2r://panorama/images/icon_thumbs_up_png.vtex" />
+					<Label id="VoteNum" class="Middle VoteLabel" text="vote_num" />
+				</Button>
+				<Button id="CommentButton" onmouseover="UIShowTextTooltip( #sched_comment )" onmouseout="UIHideTextTooltip()">
+					<Image class="VoteIcon" src="s2r://panorama/images/control_icons/comment_psd.vtex" />
+					<Label id="CommentNum" class="Middle VoteLabel" text="0" />
+				</Button>
+			</Panel>
+		</snippet>
+		<snippet name="Comment">
+			<Panel class="Comment">
+				<Panel class="CommentWho">
+					<DOTAAvatarImage id="CommentAvatarImage" />
+					<Panel class="CommentWhoWords">
+						<DOTAUserName id="UserName" />
+						<Label class="CommentTimestamp" text="{t:l:timestamp}" />
+					</Panel>
+					<Button id="CommendCommentButton" onmouseover="UIShowTextTooltip( #DOTA_Custom_Game_Vote_Up )" onmouseout="UIHideTextTooltip()">
+						<Image class="VoteIcon" src="s2r://panorama/images/icon_thumbs_up_png.vtex" />
+						<Label id="CommendCommentNum" class="Middle VoteLabel" text="0" />
+					</Button>
+				</Panel>
+				<Label class="CommentText" html="true" text="{s:comment}" />
+			</Panel>
+		</snippet>
+	</snippets>
+	<Panel hittest="false" class="CustomHudRoot GemMinimized">
+		<Panel id="SelectEnemyHeroContainer">
+			<DOTAUIHeroPicker id="HeroPicker" />
+			<Button id="EnemyCancelButton" class="CloseButton" onactivate="ToggleEnemyHeroPicker()" />
+		</Panel>
+		<Panel id="SelectAllyHeroContainer">
+			<DOTAUIHeroPicker id="HeroPicker" />
+			<Button id="AllyCancelButton" class="CloseButton" onactivate="ToggleAllyHeroPicker()" />
+		</Panel>
+		<Panel id="SelectCosmeticsContainer" hittest="false">
+			<Panel id="HeroInspectBackground" />
+			<Button id="CosmeticsCloseButton" class="CloseButton" onactivate="CloseSelectCosmetics()" />
+		</Panel>
+		<Panel class="ControlPanel LeftRightFlow">
+			<Panel class="ControlPanelContainer">
+				<Panel id="Maximized">
+					<Panel id="MinimizeButton">
+						<Label text="#DemoOptions_MinimizeButton" />
+					</Panel>
+					<Panel class="Category">
+						<Label text="#Hero_ButtonCategory" />
+						<Panel class="Row">
+							<Button class="DemoButton" onactivate="FireCustomGameEvent_Str( RefreshButtonPressed )">
+								<Label text="#Refresh_Button" />
+							</Button>
+						</Panel>
+						<Panel class="Row">
+							<ToggleButton class="DemoButton" onactivate="FireCustomGameEvent_Str( FreeSpellsButtonPressed )">
+								<Label text="#FreeSpells_Button" />
+							</ToggleButton>
+						</Panel>
+						<Panel class="Row">
+							<ToggleButton class="DemoButton" onactivate="FireCustomGameEvent_Str( NoCreepButtonPressed )">
+								<Label text="#NoCreep_Button" />
+							</ToggleButton>
+						</Panel>
+						<Panel class="Row">
+							<ToggleButton class="DemoButton" onactivate="FireCustomGameEvent_Str( ToggleHideTree )">
+								<Label text="#HideTree" />
+							</ToggleButton>
+						</Panel>
+						<Panel class="Row">
+							<ToggleButton class="DemoButton" onactivate="FireCustomGameEvent_Str( ToggleHideBuilding )">
+								<Label text="#HideBuilding" />
+							</ToggleButton>
+						</Panel>
+						<Panel class="Row">
+							<ToggleButton class="DemoButton" onactivate="FireCustomGameEvent_Str( RespawnButtonPressed )" onmouseover="$(&apos;#RespawnTooltip&apos;).SetHasClass(&apos;Hidden&apos;, false)" onmouseout="$(&apos;#RespawnTooltip&apos;).SetHasClass(&apos;Hidden&apos;, true)">
+								<Label id="RespawnButtonLabel" text="#Respawn_Button" />
+							</ToggleButton>
+						</Panel>
+					</Panel>
+					<Panel class="Category">
+						<Label text="#Spawn_ButtonCategory" />
+						<Panel class="Row">
+							<Button class="DemoButton" onactivate="ToggleAllyHeroPicker()">
+								<Label text="#ChangeHero_Button" />
+							</Button>
+						</Panel>
+						<Panel class="Row">
+							<Button class="DemoButton" onactivate="CopySelection()">
+								<Label text="#CopySelection_Button" />
+							</Button>
+						</Panel>
+						<Panel class="Row">
+							<Button class="DemoButton" onactivate="ToggleEnemyHeroPicker()">
+								<Label text="#SelectHero_Button" />
+							</Button>
+						</Panel>
+						<Panel class="Row">
+							<Button class="DemoButton" onactivate="FireCustomGameEvent_Str( LevelUpEnemyButtonPressed )">
+								<Label text="#LevelUpEnemy_Button" />
+							</Button>
+						</Panel>
+						<Panel class="Row">
+							<Button class="DemoButton" onactivate="FireCustomGameEvent_Str( DummyTargetButtonPressed )">
+								<Label text="#DummyTarget_Button" />
+							</Button>
+						</Panel>
+						<Panel class="Row">
+							<Button class="DemoButton" onactivate="RemoveSelection()">
+								<Label text="#RemoveSpawns_Button" />
+							</Button>
+						</Panel>
+					</Panel>
+					<Panel class="Category">
+						<Label text="#Misc_ButtonCategory" />
+						<Panel class="Row">
+							<ToggleButton id="ToggleCosmeticsButon" class="DemoButton" onactivate="ToggleSelectCosmetics()">
+								<Label text="#SelectCosmetics_Button" />
+							</ToggleButton>
+						</Panel>
+						<Panel class="Row">
+							<Button class="DemoButton" onactivate="Taunt()" onmouseover="DOTAShowTextTooltip(&apos;#DOTA_Hotkeys_Tooltip_HeroTaunt&apos;)" onmouseout="DOTAHideTextTooltip()">
+								<Label text="#taunt" />
+							</Button>
+						</Panel>
+					</Panel>
+				</Panel>
+			</Panel>
+			<Button id="ControlPanelSlideThumb" onactivate="$.GetContextPanel().ToggleClass(&apos;Minimized&apos;)">
+				<Panel class="RightArrowButtonIcon" />
+			</Button>
+		</Panel>
+		<Panel id="GemContainer" hittest="false">
+			<Button id="GemSlideThumb" onactivate="ToggleGemPanel()">
+				<Panel class="LeftArrowButtonIcon" />
+				<DOTAEconItem class="DisableInspect" itemdef="3001" style="vertical-align: top;" />
+				<DOTAEconItem class="DisableInspect" itemdef="3000" style="vertical-align: bottom;" />
+			</Button>
+			<Panel id="GemMaskContainer" class="ShowMask">
+				<Label id="ExperiationDate" text="{t:s:timestamp}" />
+				<Panel id="GemMask" hittest="true" onactivate="Nothing()">
+					<Panel id="EconPanel" hittest="true" onactivate="Nothing()">
+						<Panel id="QRCodePanel">
+							<Image class="PrismaticPreview" src="s2r://panorama/images/prismaticpreview_jpg.vtex" />
+							<Image class="EtherealPreview" src="s2r://panorama/images/etherealpreview_jpg.vtex" />
+							<Label id="GemTip" class="center margin-sm" html="true" text="#GemTip" />
+							<DOTAHTMLPanel id="QRCode" />
+						</Panel>
+						<Panel id="PayOptionPanel" class="LeftRightFlow">
+							<RadioButton id="Gem30" group="PayOptionButtons" class="OptionsCheckBox" onactivate="DOTASetAspectRatio(0);" selected="true" text="#Gem30" />
+							<RadioButton id="Gem180" group="PayOptionButtons" class="OptionsCheckBox" onactivate="DOTASetAspectRatio(1);" text="#Gem180" />
+							<RadioButton id="Gem365" group="PayOptionButtons" class="OptionsCheckBox" onactivate="DOTASetAspectRatio(2);" text="#Gem365" />
+						</Panel>
+						<Panel class="PayButtons">
+							<Button class="Alipay" onactivate="CreateOrder(&apos;alipay&apos;)" />
+							<Button class="Wechat" onactivate="CreateOrder(&apos;wechat&apos;)" />
+						</Panel>
+						<Label id="PayTip" class="center margin-sm" html="true" text="#PayTip" />
+					</Panel>
+				</Panel>
+				<Panel id="AvailableGems">
+					<Panel id="AvailablePrismatics" />
+					<Panel id="AvailableEthereals" />
+				</Panel>
+				<Button id="RefreshButton" class="RefreshButton" onactivate="RefreshGems()" />
+			</Panel>
+		</Panel>
+		<Panel id="HeroImageContainer" hittest="false" />
+		<Panel id="CameraPanel">
+			<Panel class="SliderPanel">
+				<Panel class="SliderLabels">
+					<Label id="Title" text="#CameraHeight" />
+					<Label id="CameraHeightValue" class="Value" text="nan" />
+				</Panel>
+				<Slider id="CameraHeightSlider" class="HorizontalSlider" direction="horizontal" min="-300" max="300" default="0" />
+			</Panel>
+			<Panel class="SliderPanel">
+				<Panel class="SliderLabels">
+					<Label id="Title" text="#CameraDistance" />
+					<Label id="CameraDistanceValue" class="Value" text="nan" />
+				</Panel>
+				<Slider id="CameraDistanceSlider" class="HorizontalSlider" direction="horizontal" min="-300" max="300" default="0" />
+			</Panel>
+		</Panel>
+		<Button id="CombinationRankButton" class="DemoButton" onactivate="ToggleCombinationRank()">
+			<Label class="Middle" text="#CombinationRank" />
+		</Button>
+		<Panel id="CombinationRankPanel">
+			<Label id="CombinationLoading" text="#dota_social_feed_loading" />
+			<Panel id="CommentPanel" class="CommentsStatusLoading">
+				<Panel class="CommentHeader">
+					<Panel id="CommentHeaderEconItems" class="CombinationEconItems" />
+					<Button id="BackButton" onactivate="BackToRank()" onmouseover="UIShowTextTooltip( #page_back )" onmouseout="UIHideTextTooltip()">
+						<Image src="s2r://panorama/images/control_icons/arrow_right_png.vtex" />
+					</Button>
+				</Panel>
+				<Panel id="CommentTextEntryContainer">
+					<DOTAAvatarImage id="CommentTextEntryAvatarImage" steamid="local" />
+					<TextEntry id="CommentTextEntry" placeholder="#dota_page_match_details_comment_placeholder" oninputsubmit="SubmitComment()" />
+				</Panel>
+				<Label id="CommentsStatusLoading" text="#dota_page_match_details_comment_loading_comments" />
+				<Label id="CommentsStatusNone" text="#dota_page_match_details_comment_no_comments" />
+				<Panel id="Comments">
+					<Panel id="GoodComments">
+						<Label class="CommentType" text="#GoodComments" />
+					</Panel>
+					<Panel id="RecentComments">
+						<Label class="CommentType" text="#RecentComments" />
+						<Panel id="LoadMore" class="LoadMore" onactivate="LoadMoreComments()">
+							<Panel id="LoadMoreContainer">
+								<Panel id="LoadMoreInner">
+									<Image class="DownArrow" />
+									<Label id="LoadMoreLabel" text="#DOTA_WatchLive_Game_LoadMore" />
+									<Image class="DownArrow" />
+								</Panel>
+								<Panel id="LoadMorePending">
+									<Panel class="WaitPip" id="ListWaitPip1" />
+									<Panel class="WaitPip" id="ListWaitPip2" />
+									<Panel class="WaitPip" id="ListWaitPip3" />
+									<Panel class="WaitPip" id="ListWaitPip4" />
+								</Panel>
+							</Panel>
+						</Panel>
+					</Panel>
+				</Panel>
+			</Panel>
+		</Panel>
+		<Button id="TutorialButton" class="DemoButton" onactivate="ToggleTutorial()">
+			<Label class="Middle" text="#VideoTutorial" />
+		</Button>
+		<Panel id="TutorialPanel">
+			<DOTAHTMLPanel id="TutorialVideo" url="https://www.bilibili.com/video/av48342518/" />
+			<Button id="TutorialCloseButton" class="CloseButton" onactivate="ToggleTutorial()" />
+		</Panel>
+	</Panel>
+</root>

@@ -945,8 +945,10 @@
 		"precache"
 		{
 			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_witchdoctor.vsndevts"
-			"particle"	"particles/units/heroes/hero_witchdoctor/witchdoctor_paralyzing_cask.vpcf"
-			"particle"	"particles/units/heroes/hero_witchdoctor/witchdoctor_paralyzing_cask_trail.vpcf"
+			// 废弃资源，效果并不好
+			//"particle"	"particles/units/heroes/hero_witchdoctor/witchdoctor_paralyzing_cask.vpcf"
+			"particle"	  "particles/units/heroes/hero_witchdoctor/witchdoctor_cask.vpcf"
+			"particle"    "particles/generic_gameplay/generic_stunned.vpcf"
 		}
 		
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
@@ -1035,6 +1037,77 @@
 			}	
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
+	}
+
+	// 华佗 巫毒治疗术
+	"witch_doctor_voodoo_restoration_lua"
+	{
+		// Ability Technical Aspect
+		// base script folder	: scripts/vscripts
+		// base texture folder	: resource/flash3/images/spellicons
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"lua_abilities/witch_doctor_voodoo_restoration_lua/witch_doctor_voodoo_restoration_lua"
+		"AbilityTextureName"			"witch_doctor_voodoo_restoration"
+		"MaxLevel"						"4"
+		"precache"
+		{
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_witchdoctor.vsndevts"
+            // 先用基础效果做测试
+			"particle"	"particles/units/heroes/hero_witchdoctor/witchdoctor_voodoo_restoration_flame_a.vpcf"
+            // 没必要加载子特效
+			"particle"  "particles/units/heroes/hero_medusa/medusa_mana_shield_impact.vpcf"
+		}
+		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ALLIES_YES"
+		"AbilitySound"					"Hero_WitchDoctor.Voodoo_Restoration"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0.0 0.0 0.0 0.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"35 40 45 50"		
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"mana_per_second"			"8 12 16 20"
+                // 天赋相关的配置先屏蔽
+				//"LinkedSpecialBonus"	"special_bonus_unique_witch_doctor_4"
+				//"LinkedSpecialBonusOperation"	"SPECIAL_BONUS_MULTIPLY"
+				//"LinkedSpecialBonusField"	"value"
+
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"500 550 600 650"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"heal"						"10 20 30 40"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"heal_interval"				"0.33 0.33 0.33 0.33"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"enemy_damage_pct"				"100"
+			}			
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 	}
 }
 

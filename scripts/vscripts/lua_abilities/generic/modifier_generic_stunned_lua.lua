@@ -14,7 +14,7 @@ end
 -- Initializations
 function modifier_generic_stunned_lua:OnCreated( kv )
 	if not IsServer() then return end
-
+	
 	self.particle = "particles/generic_gameplay/generic_stunned.vpcf"
 	if kv.bash==1 then
 		self.particle = "particles/generic_gameplay/generic_bashed.vpcf"

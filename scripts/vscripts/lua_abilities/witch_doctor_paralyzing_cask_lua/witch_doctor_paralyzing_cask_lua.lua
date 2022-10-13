@@ -1,4 +1,5 @@
 witch_doctor_paralyzing_cask_lua = class({})
+LinkLuaModifier( "modifier_generic_stunned_lua", "lua_abilities/generic/modifier_generic_stunned_lua", LUA_MODIFIER_MOTION_NONE )
 LinkLuaModifier( "modifier_witch_doctor_paralyzing_cask_lua", "lua_abilities/witch_doctor_paralyzing_cask_lua/modifier_witch_doctor_paralyzing_cask_lua", LUA_MODIFIER_MOTION_NONE )
 LinkLuaModifier( "modifier_witch_doctor_paralyzing_cask_lua_thinker", "lua_abilities/witch_doctor_paralyzing_cask_lua/modifier_witch_doctor_paralyzing_cask_lua_thinker", LUA_MODIFIER_MOTION_NONE )
 LinkLuaModifier( "modifier_generic_tracking_projectile", "lua_abilities/generic/modifier_generic_tracking_projectile", LUA_MODIFIER_MOTION_NONE )
@@ -59,8 +60,10 @@ function witch_doctor_paralyzing_cask_lua:OnSpellStart()
 	local key = tempTable:AddATValue( castTable )
 
 	-- load projectile 播放的特效
-	--local projectile_name = "particles/econ/items/lich/lich_ti8_immortal_arms/lich_ti8_chain_frost.vpcf"
-	local projectile_name = "particles/units/heroes/hero_witchdoctor/witchdoctor_paralyzing_cask_trail.vpcf"
+	-- local projectile_name = "particles/econ/items/lich/lich_ti8_immortal_arms/lich_ti8_chain_frost.vpcf"
+	local projectile_name = "particles/units/heroes/hero_witchdoctor/witchdoctor_cask.vpcf"
+	-- local projectile_name = "particles/econ/items/witch_doctor/wd_2021_cache/wd_2021_cache_death_ward.vpcf"
+	
 	local projectile_speed = self:GetSpecialValueFor("speed")
 	-- 投射物提供的视野范围，事实证明，麻痹药剂是不考虑视野的，只要目标在范围内，即使没有视野依然可以弹射。麻痹药剂也不会为友方玩家提供视野
 	-- local projectile_vision = self:GetSpecialValueFor("bounce_range")
@@ -122,6 +125,30 @@ function witch_doctor_paralyzing_cask_lua:OnProjectileHit_ExtraData( target, loc
 	-- apply damage and slow
 	-- 如果目标不是魔法免疫且不是无敌的，造成伤害
 	if (not target:IsMagicImmune()) and (not target:IsInvulnerable()) then
+		local stun_duration = target:IsCreep() and castTable.creep_duration or castTable.hero_duration
+		-- 为目标添加一个麻痹效果
+		local stun_modifier = target:AddNewModifier(
+			self:GetCaster(), -- player source
+			self, -- ability source
+			-- 使用通用眩晕逻辑
+			"modifier_generic_stunned_lua",
+			{
+				-- 小兵和英雄的眩晕时间按配置区分
+				duration = stun_duration,
+			} -- kv
+		)
+
+		-- 造成伤害后可能导致目标死亡，造成的目标丢失，从而生成的修改器为空，所以需要判空
+		if stun_modifier then
+			-- 这个眩晕效果是公共效果，包括冰女的冰封禁制也是使用这个逻辑，但表现需要各自的逻辑额外添加
+			local stun_effect = ParticleManager:CreateParticle(stun_modifier:GetEffectName(), PATTACH_OVERHEAD_FOLLOW, target )
+			self:SetContextThink(DoUniqueString("DestroyStun"),function()
+				ParticleManager:DestroyParticle(stun_effect,false)
+				ParticleManager:ReleaseParticleIndex(stun_effect)
+			end,stun_duration)
+		end
+
+		-- 生效次序是先麻痹，再伤害
 		local damageTable = {
 			victim = target,
 			attacker = self:GetCaster(),
@@ -130,21 +157,6 @@ function witch_doctor_paralyzing_cask_lua:OnProjectileHit_ExtraData( target, loc
 			ability = self, --Optional.
 		}
 		ApplyDamage(damageTable)
-
-		-- 为目标添加一个麻痹效果
-		target:AddNewModifier(
-			self:GetCaster(), -- player source
-			self, -- ability source
-			-- 先用通用眩晕看看效果
-			"modifier_generic_stunned_lua",
-			-- "modifier_witch_doctor_paralyzing_cask_lua", -- modifier name
-			{
-				-- 小兵和英雄的眩晕时间按配置区分
-				duration = target:IsCreep() and castTable.creep_duration or castTable.hero_duration,
-				--as_slow = castTable.as_slow,
-				--ms_slow = castTable.ms_slow,
-			} -- kv
-		)
 	end
 
 	-- play effects播放击中音效

@@ -1,0 +1,81 @@
+"DOTAAbilities"
+{
+	//=================================================================================================================
+	// witch doctor: paralyzing cask (Lua version)
+	//=================================================================================================================
+	"witch_doctor_voodoo_restoration_lua"
+	{
+		// Ability Technical Aspect
+		// base script folder	: scripts/vscripts
+		// base texture folder	: resource/flash3/images/spellicons
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"lua_abilities/witch_doctor_voodoo_restoration_lua/witch_doctor_voodoo_restoration_lua"
+		"AbilityTextureName"			"witch_doctor_voodoo_restoration"
+		"MaxLevel"						"4"
+		"precache"
+		{
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_witchdoctor.vsndevts"
+            // 先用基础效果做测试
+			"particle"	"particles/units/heroes/hero_witchdoctor/witchdoctor_voodoo_restoration.vpcf"
+            // 后面再考虑用组合效果做表现
+			"particle"	"particles/units/heroes/hero_witchdoctor/witchdoctor_voodoo_restoration_flame_a.vpcf"
+            "particle"	"particles/units/heroes/hero_witchdoctor/witchdoctor_voodoo_restoration_flame_b.vpcf"
+            "particle"	"particles/units/heroes/hero_witchdoctor/witchdoctor_voodoo_restoration_flame_c.vpcf"
+            "particle"	"particles/units/heroes/hero_witchdoctor/witchdoctor_voodoo_restoration_flame_d.vpcf"
+			"particle"	"particles/units/heroes/hero_witchdoctor/witchdoctor_voodoo_restoration_flame_light.vpcf"
+            "particle"	"particles/units/heroes/hero_witchdoctor/witchdoctor_voodoo_restoration_aura.vpcf"
+			"particle"	"particles/units/heroes/hero_witchdoctor/witchdoctor_voodoo_restoration_heal.vpcf"
+		}
+		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ALLIES_YES"
+		"AbilitySound"					"Hero_WitchDoctor.Voodoo_Restoration"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0.0 0.0 0.0 0.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"35 40 45 50"		
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"mana_per_second"			"8 12 16 20"
+                // 天赋相关的配置先屏蔽
+				//"LinkedSpecialBonus"	"special_bonus_unique_witch_doctor_4"
+				//"LinkedSpecialBonusOperation"	"SPECIAL_BONUS_MULTIPLY"
+				//"LinkedSpecialBonusField"	"value"
+
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"500 550 600 650"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"heal"						"10 20 30 40"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"heal_interval"				"0.33 0.33 0.33 0.33"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"enemy_damage_pct"				"100"
+			}			
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+	}
+}

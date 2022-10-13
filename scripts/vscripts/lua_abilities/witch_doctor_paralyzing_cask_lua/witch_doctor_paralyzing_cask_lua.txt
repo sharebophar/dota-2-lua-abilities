@@ -16,8 +16,10 @@
 		"precache"
 		{
 			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_witchdoctor.vsndevts"
+			"particle"	"particles/econ/items/lich/lich_ti8_immortal_arms/lich_ti8_chain_frost.vpcf"
 			"particle"	"particles/units/heroes/hero_witchdoctor/witchdoctor_paralyzing_cask.vpcf"
 			"particle"	"particles/units/heroes/hero_witchdoctor/witchdoctor_paralyzing_cask_trail.vpcf"
+			"particle"	"particles/econ/items/witch_doctor/wd_2021_cache/wd_2021_cache_death_ward.vpcf"
 		}
 		
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"

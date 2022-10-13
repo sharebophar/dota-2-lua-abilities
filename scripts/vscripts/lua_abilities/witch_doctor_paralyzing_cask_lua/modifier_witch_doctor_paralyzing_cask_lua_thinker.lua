@@ -82,8 +82,8 @@ function modifier_witch_doctor_paralyzing_cask_lua_thinker:OnDestroy( kv )
 		castTable.projectile.Target = target
 		castTable.projectile.Source = self:GetParent()
 		-- castTable.projectile.EffectName = "particles/econ/items/lich/lich_ti8_immortal_arms/lich_ti8_chain_frost.vpcf"
-		castTable.projectile.EffectName = "particles/units/heroes/hero_witchdoctor/witchdoctor_paralyzing_cask_trail.vpcf"
-
+		castTable.projectile.EffectName = "particles/units/heroes/hero_witchdoctor/witchdoctor_cask.vpcf"
+		-- castTable.projectile.EffectName = "particles/econ/items/witch_doctor/wd_2021_cache/wd_2021_cache_death_ward.vpcf"
 		castTable.projectile = self:PlayProjectile( castTable.projectile )
 		ProjectileManager:CreateTrackingProjectile( castTable.projectile )
 	end

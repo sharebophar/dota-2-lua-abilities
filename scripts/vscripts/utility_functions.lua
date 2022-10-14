@@ -44,6 +44,11 @@ function TableLength(t)
     return nCount
 end
 
+-- 防止require时报错
+if CHeroDemo == nil then
+    _G.CHeroDemo = class({})
+end
+
 function CHeroDemo:BroadcastMsg(sMsg)
     -- Display a message about the button action that took place
     local buttonEventMessage = sMsg

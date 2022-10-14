@@ -143,8 +143,8 @@ function witch_doctor_paralyzing_cask_lua:OnProjectileHit_ExtraData( target, loc
 			-- 这个眩晕效果是公共效果，包括冰女的冰封禁制也是使用这个逻辑，但表现需要各自的逻辑额外添加
 			local stun_effect = ParticleManager:CreateParticle(stun_modifier:GetEffectName(), PATTACH_OVERHEAD_FOLLOW, target )
 			self:SetContextThink(DoUniqueString("DestroyStun"),function()
-				ParticleManager:DestroyParticle(stun_effect,false)
 				ParticleManager:ReleaseParticleIndex(stun_effect)
+				ParticleManager:DestroyParticle(stun_effect,false)
 			end,stun_duration)
 		end
 

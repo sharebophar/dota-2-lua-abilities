@@ -18,14 +18,6 @@
 			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_witchdoctor.vsndevts"
             // 先用基础效果做测试
 			"particle"	"particles/units/heroes/hero_witchdoctor/witchdoctor_voodoo_restoration.vpcf"
-            // 后面再考虑用组合效果做表现
-			"particle"	"particles/units/heroes/hero_witchdoctor/witchdoctor_voodoo_restoration_flame_a.vpcf"
-            "particle"	"particles/units/heroes/hero_witchdoctor/witchdoctor_voodoo_restoration_flame_b.vpcf"
-            "particle"	"particles/units/heroes/hero_witchdoctor/witchdoctor_voodoo_restoration_flame_c.vpcf"
-            "particle"	"particles/units/heroes/hero_witchdoctor/witchdoctor_voodoo_restoration_flame_d.vpcf"
-			"particle"	"particles/units/heroes/hero_witchdoctor/witchdoctor_voodoo_restoration_flame_light.vpcf"
-            "particle"	"particles/units/heroes/hero_witchdoctor/witchdoctor_voodoo_restoration_aura.vpcf"
-			"particle"	"particles/units/heroes/hero_witchdoctor/witchdoctor_voodoo_restoration_heal.vpcf"
 		}
 		
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"

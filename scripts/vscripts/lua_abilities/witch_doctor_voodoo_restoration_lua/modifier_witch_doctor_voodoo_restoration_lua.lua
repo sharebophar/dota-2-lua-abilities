@@ -32,7 +32,6 @@ function modifier_witch_doctor_voodoo_restoration_lua:OnCreated( kv )
     self.heal = self:GetAbility():GetSpecialValueFor( "heal" )
     self.heal_interval = self:GetAbility():GetSpecialValueFor( "heal_interval" )
 	self.enemy_damage_pct = self:GetAbility():GetSpecialValueFor( "enemy_damage_pct" )/100
-	self.interval_time = 0.33
 
 	if not IsServer() then return end
 	-- Play effects
@@ -53,7 +52,7 @@ function modifier_witch_doctor_voodoo_restoration_lua:OnCreated( kv )
 
 	-- Start interval
 	-- 时间间隔填固定值了
-	self:StartIntervalThink( self.interval_time )
+	self:StartIntervalThink( self.heal_interval )
 	self:OnIntervalThink()
 	-- 技能开启时是否真的有一次救己伤敌效果？
 	-- self:ApplyDamageOnSpellStart()
@@ -93,17 +92,16 @@ function modifier_witch_doctor_voodoo_restoration_lua:OnIntervalThink()
 	-- 技能开启时，添加一个计时器，每秒消耗魔法，造成范围伤害和治疗，
 	-- 光环的0.5秒粘滞时间表示光环消失后仍然持续0.5秒，
 	-- 实现逻辑是以每跳小于0.5秒的时间（比如0.33秒）添加一个持续0.5秒的子效果（覆盖不叠加），当光环移除时，子效果仍然能停留最多0.5秒
-	-- 由于所有效果由光环提供，所以逻辑应该是，添加光环后，由光环计算伤害和治疗；光环在0.333秒时
-	-- 获取周围的敌人列表，不包括信使
-
+	-- 由于所有效果由光环提供，所以逻辑应该是，添加光环后，由光环计算伤害和治疗
+	local caster = self:GetCaster()
 	-- 获取周围的单位列表
 	local around_units = FindUnitsInRadius(
-		self:GetCaster():GetTeamNumber(),	-- int, your team number
+		caster:GetTeamNumber(),	-- int, your team number
 		self:GetParent():GetOrigin(),	-- point, center point
 		nil,	-- handle, cacheUnit. (not known)
 		self.radius,	-- float, radius. or use FIND_UNITS_EVERYWHERE
 		DOTA_UNIT_TARGET_TEAM_BOTH ,	-- int, team filter
-		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC ,	-- 英雄，小兵，中立单位，信使
+		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC ,	-- 英雄，小兵，中立单位，信使；伤害不包括信使，暂时就这样写了
 		0,	-- int, flag filter
 		0,	-- int, order filter
 		false	-- bool, can grow cache
@@ -116,7 +114,7 @@ function modifier_witch_doctor_voodoo_restoration_lua:OnIntervalThink()
 			"modifier_witch_doctor_voodoo_restoration_lua_thinker", -- modifier name
 			{ 
 				duration = 0.5,
-				affact_interval = self.interval_time,
+				heal_interval = self.heal_interval,
 				heal = self.heal,
 				damage = self.heal * self.enemy_damage_pct,
 				damage_type = DAMAGE_TYPE_MAGICAL,
@@ -126,9 +124,16 @@ function modifier_witch_doctor_voodoo_restoration_lua:OnIntervalThink()
 		)
 	end
 
+	-- 消耗魔法
+	caster:SpendMana(self.mana_per_second,self:GetAbility())
+	-- 剩余魔法如果不够消耗，则关闭技能
+	if caster:GetMana() < self.mana_per_second then
+		self:GetAbility():ToggleAbility()
+	end
 	print("OnIntervalThink")
 end
 
+-- 技能升级时会调用
 function modifier_witch_doctor_voodoo_restoration_lua:OnRefresh( kv )
 	-- references
 	self.mana_per_second = self:GetAbility():GetSpecialValueFor( "mana_per_second" )
@@ -162,8 +167,8 @@ function modifier_witch_doctor_voodoo_restoration_lua:OnDestroy()
     print("modifier_witch_doctor_voodoo_restoration_lua:OnDestroy()")
 	if not IsServer() then return end
 	-- Play effects
-	local sound_cast = "Hero_Medusa.ManaShield.Off"
-	EmitSoundOn( sound_cast, self:GetParent() )
+	local sound_off = "Hero_WitchDoctor.Voodoo_Restoration.Off"
+	EmitSoundOn( sound_off, self:GetParent() )
 
     -- 移除特效
     ParticleManager:DestroyParticle(self.spell_effect,false)
@@ -211,8 +216,8 @@ function modifier_witch_doctor_voodoo_restoration_lua:PlayEffects(target )
 
     -- 用下面这个特效会导致十字架特效在技能关闭后不删除特效，原因可能是其粒子特效的设置不同
     -- local particle_cast = "particles/units/heroes/hero_witchdoctor/witchdoctor_voodoo_restoration_aura.vpcf"
-	local sound_cast = "Hero_Medusa.ManaShield.Proc"
-
+	local sound_cast = "Hero_WitchDoctor.Voodoo_Restoration"
+	local sound_loop = "Hero_WitchDoctor.Voodoo_Restoration.Loop"
 	-- Create Particle
 	self.spell_effect = ParticleManager:CreateParticle( particle_cast, PATTACH_ABSORIGIN_FOLLOW, target )
 	ParticleManager:SetParticleAlwaysSimulate(self.spell_effect)
@@ -228,4 +233,5 @@ function modifier_witch_doctor_voodoo_restoration_lua:PlayEffects(target )
 
 	-- Create Sound
 	EmitSoundOn( sound_cast, self:GetParent() )
+	EmitSoundOn( sound_loop, self:GetParent() )
 end

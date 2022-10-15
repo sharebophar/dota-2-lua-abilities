@@ -1,7 +1,8 @@
 
 local _print = origin_print or print
 local _traceback = origin_traceback or debug.traceback
-if not debug.bHookIsSet then
+-- if not debug.bHookIsSet then
+if true then
     -- 在出bug的时候，将第一行改为 if true then，可以查看程序最后执行的函数是哪个
     -- 如果游戏直接崩溃（连控制台也直接没了），你可以打开mdmp文件，里面有控制台输出记录
     debug.sethook(function(...)

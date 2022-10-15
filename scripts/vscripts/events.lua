@@ -40,11 +40,18 @@ function CHeroDemo:OnNPCSpawned(event)
     end
 
     -- 服装师
-    if spawnedUnit:GetUnitName() == "npc_dota_hero_wisp" then
-        spawnedUnit:SetAbilityPoints(0)
-        spawnedUnit:AddNewModifier(spawnedUnit, nil, "dresser", nil)
+    if spawnedUnit:GetUnitName() == "npc_dota_hero_witch_doctor" then
+        spawnedUnit:SetAbilityPoints(30)
+        --spawnedUnit:AddNewModifier(spawnedUnit, nil, "dresser", nil)
         --spawnedUnit:FindAbilityByName("day"):SetLevel(1)
         --spawnedUnit:FindAbilityByName("night"):SetLevel(1)
+        for i=1,30 do
+            spawnedUnit:HeroLevelUp(false)
+        end
+        spawnedUnit:UpgradeAbility(spawnedUnit:GetAbilityByIndex(0))
+        spawnedUnit:UpgradeAbility(spawnedUnit:GetAbilityByIndex(1))
+        spawnedUnit:UpgradeAbility(spawnedUnit:GetAbilityByIndex(2))
+        spawnedUnit:UpgradeAbility(spawnedUnit:GetAbilityByIndex(3))
     end
 
     if

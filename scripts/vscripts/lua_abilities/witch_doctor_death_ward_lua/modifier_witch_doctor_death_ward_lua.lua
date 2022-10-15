@@ -72,8 +72,11 @@ function modifier_witch_doctor_death_ward_lua:OnCreated( kv )
         creationtime:70.765930175781
         isProvidedByAura:0
     ]]
+    if not IsServer() then return end
     if kv.createOnSpellStart then
         self:CreateWard()
+        self.death_ward:SetBaseDamageMin(self.damage)
+        self.death_ward:SetBaseDamageMax(self.damage)
     end
 end
 
@@ -106,22 +109,25 @@ function modifier_witch_doctor_death_ward_lua:CreateWard()
     -- 因为OnCreate不知什么原因调用了两次导致的
     local position = self:GetAbility():GetCursorPosition()
     -- local position = Vector(kv.position_x,kv.position_y,kv.position_z)
-    print("position is:",position)
+    -- print("position is:",position)
     -- Creates the death ward (There is no way to control the default ward, so this is a custom one)
-    caster.death_ward = CreateUnitByName("npc_dota_witch_doctor_death_ward_lua", position, true, caster, caster, caster:GetTeamNumber())
-    caster.death_ward:SetControllableByPlayer(caster:GetPlayerOwnerID(), true)
-    caster.death_ward:SetOwner(caster)
+    self.death_ward = CreateUnitByName("npc_dota_witch_doctor_death_ward_lua", position, true, caster, caster, caster:GetTeamNumber())
+    self.death_ward:SetControllableByPlayer(caster:GetPlayerOwnerID(), true)
+    self.death_ward:SetOwner(caster)
 
     -- Applies the modifier (gives it damage, removes health bar, and makes it invulnerable)
     -- CDOTA_Ability_DataDriven extends CDOTABaseAbility 数据驱动的技能才能使用数据驱动的修改器，所以这里我添加自己定义的修改器
     -- ability:ApplyDataDrivenModifier(caster, caster.death_ward, "modifier_death_ward_datadriven", {})
 
     -- 为死亡守卫添加修改器
-    caster.death_ward:AddNewModifier(
+    self.death_ward:AddNewModifier(
         caster,
         self:GetAbility(),
+        --nil,
         "modifier_witch_doctor_death_ward_lua_effect",
-        {} -- kv
+        {
+            attack_range = self.attack_range_tooltip,
+        } -- kv
     )
 
     -- 死亡守卫每隔一段时间要找最近的单位攻击，死亡守卫的攻击特效是由死亡守卫自身决定的。
@@ -129,22 +135,22 @@ function modifier_witch_doctor_death_ward_lua:CreateWard()
     -- 死亡守卫的所有效果会在修改器移除时移除
     -- 创建光晕效果
     local ward_glow_effect = "particles/units/heroes/hero_witchdoctor/witchdoctor_deathward_glow_c.vpcf"
-    ParticleManager:CreateParticle(ward_glow_effect, PATTACH_CUSTOMORIGIN, caster.death_ward)
+    ParticleManager:CreateParticle(ward_glow_effect, PATTACH_CUSTOMORIGIN, self.death_ward)
     -- 创建死亡守卫的周身特效
     local around_effect = "particles/units/heroes/hero_witchdoctor/witchdoctor_ward_skull.vpcf"
-    local cast_around_effect = ParticleManager:CreateParticle(around_effect, PATTACH_CUSTOMORIGIN, caster.death_ward)
+    local cast_around_effect = ParticleManager:CreateParticle(around_effect, PATTACH_CUSTOMORIGIN, self.death_ward)
     ParticleManager:SetParticleControlEnt(
         cast_around_effect,
         0,
-        caster.death_ward,
+        self.death_ward,
         PATTACH_POINT_FOLLOW,
         "attach_attack1",
-        caster.death_ward:GetAbsOrigin(),
+        self.death_ward:GetAbsOrigin(),
         true
     )
     -- 创建权杖特效
     local stuff_effect = "particles/units/heroes/hero_witchdoctor/witchdoctor_ward_cast_staff_fire.vpcf"
-    caster.cast_stuff = ParticleManager:CreateParticle(stuff_effect, PATTACH_CUSTOMORIGIN, caster)
+    self.cast_stuff = ParticleManager:CreateParticle(stuff_effect, PATTACH_CUSTOMORIGIN, caster)
 end
 
 --[[Author: YOLOSPAGHETTI
@@ -152,15 +158,15 @@ end
     Removes the death ward entity from the game and stops its sound]]
 function modifier_witch_doctor_death_ward_lua:DestroyWard(keys)
     local caster = self:GetCaster()
-    UTIL_Remove(caster.death_ward) -- 移除指定对象，不走死亡逻辑
-    caster.death_ward = nil
+    UTIL_Remove(self.death_ward) -- 移除指定对象，不走死亡逻辑
+    self.death_ward = nil
 
     local ward_attack_sound = "Hero_WitchDoctor_Ward.Attack"
     StopSoundEvent(ward_attack_sound, caster)
-    if caster.cast_stuff then
-        ParticleManager:DestroyParticle(caster.cast_stuff, false)
-        ParticleManager:ReleaseParticleIndex(caster.cast_stuff)
-        caster.cast_stuff = nil
+    if self.cast_stuff then
+        ParticleManager:DestroyParticle(self.cast_stuff, false)
+        ParticleManager:ReleaseParticleIndex(self.cast_stuff)
+        self.cast_stuff = nil
     end
 end
     

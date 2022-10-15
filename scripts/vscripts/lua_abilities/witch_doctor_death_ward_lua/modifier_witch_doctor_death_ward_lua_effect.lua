@@ -17,8 +17,11 @@ end
 --------------------------------------------------------------------------------
 -- Initializations
 function modifier_witch_doctor_death_ward_lua_effect:OnCreated( kv )
+    if not IsServer() then return end
 	-- references
     self.delay = kv.delay or 0
+    self.attack_range = kv.attack_range
+    -- print("modifier_witch_doctor_death_ward_lua_effect:OnCreated( kv )-----------radius is:",self.attack_range)
 	-- 找最近的目标攻击
 
 	if IsServer() then
@@ -74,12 +77,11 @@ function modifier_witch_doctor_death_ward_lua_effect:OnIntervalThink()
 	-- self.hidden = true
     local ward_unit = self:GetParent()
     local caster = ward_unit:GetOwner()
-    local radius = ward_unit:GetAcquisitionRange()
     local enemies = FindUnitsInRadius(
         caster:GetTeamNumber(),
         ward_unit:GetOrigin(),
         nil,
-        radius,
+        self.attack_range or ward_unit:GetAcquisitionRange(),
         DOTA_UNIT_TARGET_TEAM_ENEMY,
         DOTA_UNIT_TARGET_HERO,
         DOTA_UNIT_TARGET_FLAG_NONE,

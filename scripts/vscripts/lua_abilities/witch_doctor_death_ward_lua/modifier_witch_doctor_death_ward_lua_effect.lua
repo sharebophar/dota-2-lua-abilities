@@ -71,10 +71,8 @@ function modifier_witch_doctor_death_ward_lua_effect:CheckState()
 	return state
 end
 
---------------------------------------------------------------------------------
--- Interval Effects
-function modifier_witch_doctor_death_ward_lua_effect:OnIntervalThink()
-	-- self.hidden = true
+-- 死亡守卫并不是时时刻刻都在找最近的目标攻击，而是当“已选定的当前最近目标”离开攻击范围后才改向攻击最近目标
+function modifier_witch_doctor_death_ward_lua_effect:ChangeTarget()
     local ward_unit = self:GetParent()
     local caster = ward_unit:GetOwner()
     local enemies = FindUnitsInRadius(
@@ -89,8 +87,42 @@ function modifier_witch_doctor_death_ward_lua_effect:OnIntervalThink()
         false
     )
 
-    -- 攻击附近的最近一个单位，这里暂时不写蓝杖弹射效果
+    -- 攻击附近的最近一个单位
     if enemies[1] then
-        ward_unit:SetForceAttackTarget(enemies[1])
+        self.target = enemies[1]
+    end
+end
+--------------------------------------------------------------------------------
+-- Interval Effects
+function modifier_witch_doctor_death_ward_lua_effect:OnIntervalThink()
+	-- self.hidden = true
+    local ward_unit = self:GetParent()
+    if self.target and self.target:IsAlive() then
+        local range_to_target = ward_unit:GetRangeToUnit(self.target)
+        if range_to_target > self.attack_range then
+            self:ChangeTarget()
+        end
+        ward_unit:SetForceAttackTarget(self.target)
+
+        -- 添加修改器应该在think时还是attack时？
+        -- 死亡守卫是否具有攻击弹射以及100%克敌击先取决于“该时刻施法者是否拥有阿哈利姆神杖”而不是“施法时”
+        local caster = self:GetCaster()
+        local bScepter = caster:HasScepter()
+        if not bScepter then return end
+        -- 给目标添加一个弹射的修改器
+        --[[
+        target:AddNewModifier(
+            caster, -- player source
+            self:GetAbility(), -- ability source
+            "modifier_witch_doctor_death_ward_lua_effect_thinker", -- modifier name
+            {
+                key = kv.key,
+                duration = bounce_delay,
+            } -- kv
+        )
+        ]]
+    else
+        -- 目标不存在或已死亡也切换目标
+        self:ChangeTarget()
     end
 end

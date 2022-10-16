@@ -123,7 +123,6 @@ function modifier_witch_doctor_death_ward_lua:CreateWard()
     self.death_ward:AddNewModifier(
         caster,
         self:GetAbility(),
-        --nil,
         "modifier_witch_doctor_death_ward_lua_effect",
         {
             attack_range = self.attack_range_tooltip,

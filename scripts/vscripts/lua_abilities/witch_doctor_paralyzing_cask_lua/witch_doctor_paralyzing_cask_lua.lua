@@ -107,7 +107,7 @@ function witch_doctor_paralyzing_cask_lua:OnProjectileHit_ExtraData( target, loc
 	self.bounce_times = self.bounce_times + 1
 	-- load data
 	local bounce_delay = self:GetSpecialValueFor("bounce_delay") -- 巫医这里走的配置
-	local castTable = tempTable:GetATValue( kv.key )
+	local castTable = tempTable:GetATValue( kv.key ) -- tempTable可以用在不同作用域之间的传递数据，kv中不能传递的结构可以通过传递key来传递
 	local damage = castTable.base_damage + self.bounce_times * castTable.bounce_bonus_damage
 
 	-- bounce thinker
@@ -130,25 +130,15 @@ function witch_doctor_paralyzing_cask_lua:OnProjectileHit_ExtraData( target, loc
 		local stun_modifier = target:AddNewModifier(
 			self:GetCaster(), -- player source
 			self, -- ability source
-			-- 使用通用眩晕逻辑
-			"modifier_generic_stunned_lua",
+			-- 不再使用通用眩晕逻辑
+			"modifier_witch_doctor_paralyzing_cask_lua",
 			{
 				-- 小兵和英雄的眩晕时间按配置区分
 				duration = stun_duration,
 			} -- kv
 		)
 
-		-- 造成伤害后可能导致目标死亡，造成的目标丢失，从而生成的修改器为空，所以需要判空
-		if stun_modifier then
-			-- 这个眩晕效果是公共效果，包括冰女的冰封禁制也是使用这个逻辑，但表现需要各自的逻辑额外添加
-			local stun_effect = ParticleManager:CreateParticle(stun_modifier:GetEffectName(), PATTACH_OVERHEAD_FOLLOW, target )
-			self:SetContextThink(DoUniqueString("DestroyStun"),function()
-				ParticleManager:ReleaseParticleIndex(stun_effect)
-				ParticleManager:DestroyParticle(stun_effect,false)
-			end,stun_duration)
-		end
-
-		-- 生效次序是先麻痹，再伤害
+		-- 技能原本的生效次序是先麻痹，再伤害，不知道灰机百科上说的这个次序是逻辑次序还是分两帧分别执行
 		local damageTable = {
 			victim = target,
 			attacker = self:GetCaster(),
@@ -157,6 +147,21 @@ function witch_doctor_paralyzing_cask_lua:OnProjectileHit_ExtraData( target, loc
 			ability = self, --Optional.
 		}
 		ApplyDamage(damageTable)
+
+		--[[
+		-- 造成伤害后可能导致目标死亡，造成的目标丢失，从而生成的修改器为空，所以需要判空
+		if stun_modifier then
+			-- 这个眩晕效果是公共效果，包括冰女的冰封禁制也是使用这个逻辑，但表现需要各自的逻辑额外添加
+			-- buff持续时间会算目标的状态抵抗，所以表现也要计算;重复弹射会导致特效残留
+			local resist = 1-target:GetStatusResistance()
+			local stun_effect_duration = stun_duration*resist
+			target.stun_effect = ParticleManager:CreateParticle(stun_modifier:GetEffectName(), PATTACH_OVERHEAD_FOLLOW, target )
+			target:SetContextThink(DoUniqueString("DestroyStun"),function()
+				ParticleManager:DestroyParticle(target.stun_effect,false)
+				ParticleManager:ReleaseParticleIndex(target.stun_effect)
+			end,stun_effect_duration)
+		end
+		]]
 	end
 
 	-- play effects播放击中音效
@@ -179,7 +184,7 @@ function witch_doctor_paralyzing_cask_lua:PlayProjectile( info )
 		info.Source, -- player source
 		self, -- ability source
 		"modifier_generic_tracking_projectile", -- modifier name
-		-- 持续4秒？
+		-- 持续4秒，作为短时间内不能被弹射的标记
 		{ duration = 4 } -- kv
 	)
 	tracker:PlayTrackingProjectile( info )

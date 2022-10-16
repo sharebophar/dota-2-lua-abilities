@@ -19,8 +19,10 @@ end
 function modifier_witch_doctor_death_ward_lua_effect:OnCreated( kv )
     if not IsServer() then return end
 	-- references
-    self.delay = kv.delay or 0
+    self.delay = kv.delay or 1 -- self:GetParent():GetAttackSpeed() -- 看看这个攻击速度是不是kv配置中 AttackRate 的值
+    -- print("死亡守卫的攻击间隔为：",self:GetParent():GetAttacksPerSecond())
     self.attack_range = kv.attack_range
+    self.damage = kv.damage or 0
     -- print("modifier_witch_doctor_death_ward_lua_effect:OnCreated( kv )-----------radius is:",self.attack_range)
 	-- 找最近的目标攻击
 
@@ -39,7 +41,7 @@ function modifier_witch_doctor_death_ward_lua_effect:OnRefresh( kv )
 end
 
 function modifier_witch_doctor_death_ward_lua_effect:OnDestroy( kv )
-
+    
 end
 
 --------------------------------------------------------------------------------
@@ -66,6 +68,7 @@ function modifier_witch_doctor_death_ward_lua_effect:CheckState()
         [MODIFIER_STATE_UNSELECTABLE] = true, -- 不可被选中的
         [MODIFIER_STATE_UNTARGETABLE] = true, -- 不能作为目标的
         [MODIFIER_STATE_ROOTED] = true, -- 不能移动
+        [MODIFIER_STATE_DISARMED] = true, -- 缴械，发现生物基类的情况下会对目标普攻
 	}
 
 	return state
@@ -95,34 +98,72 @@ end
 --------------------------------------------------------------------------------
 -- Interval Effects
 function modifier_witch_doctor_death_ward_lua_effect:OnIntervalThink()
-	-- self.hidden = true
     local ward_unit = self:GetParent()
     if self.target and self.target:IsAlive() then
         local range_to_target = ward_unit:GetRangeToUnit(self.target)
         if range_to_target > self.attack_range then
             self:ChangeTarget()
         end
-        ward_unit:SetForceAttackTarget(self.target)
-
-        -- 添加修改器应该在think时还是attack时？
-        -- 死亡守卫是否具有攻击弹射以及100%克敌击先取决于“该时刻施法者是否拥有阿哈利姆神杖”而不是“施法时”
-        local caster = self:GetCaster()
-        local bScepter = caster:HasScepter()
-        if not bScepter then return end
-        -- 给目标添加一个弹射的修改器
-        --[[
-        target:AddNewModifier(
-            caster, -- player source
-            self:GetAbility(), -- ability source
-            "modifier_witch_doctor_death_ward_lua_effect_thinker", -- modifier name
-            {
-                key = kv.key,
-                duration = bounce_delay,
-            } -- kv
-        )
-        ]]
     else
         -- 目标不存在或已死亡也切换目标
         self:ChangeTarget()
     end
+    if self.target then
+        self:WardAttackToTarget(ward_unit)
+    end
+end
+
+function modifier_witch_doctor_death_ward_lua_effect:WardAttackToTarget(ward_unit)
+    -- 不能再用这个强制攻击接口，必须让死亡守卫模拟攻击指定目标，来找准bounce时机
+    -- ward_unit:SetForceAttackTarget(self.target)
+    local ability = self:GetAbility()
+    local caster = ward_unit:GetOwner()
+    -- load data
+    local damage = ability:GetSpecialValueFor( "damage" )
+    local scepter = false
+    if caster:HasScepter() then
+        -- damage = self:GetSpecialValueFor("damage_scepter")
+        scepter = true
+    end
+
+    -- store data
+    local castTable = {
+        damage = damage,
+        scepter = scepter,
+        jump_range = ability:GetSpecialValueFor("bounce_radius"),
+        bounced_targets = {self.target}, -- 被本次弹射攻击过的目标不会再被弹射，但仍可以被攻击
+    }
+    local key = tempTable:AddATValue( castTable )
+
+    -- local projectile_name = "particles/econ/items/lich/lich_ti8_immortal_arms/lich_ti8_chain_frost.vpcf"
+    local projectile_name = "particles/units/heroes/hero_witchdoctor/witchdoctor_ward_attack.vpcf"
+    -- 后面测试看看能不能改
+    -- projectile_name = ward_unit:GetRangedProjectileName()
+    local projectile_speed = self.target:GetProjectileSpeed()
+    --local projectile_vision = self:GetSpecialValueFor("vision_radius")
+
+    local projectile_info = {
+        Target = self.target,
+        Source = ward_unit,
+        Ability = ability,	
+        
+        EffectName = projectile_name,
+        iMoveSpeed = projectile_speed,
+        bDodgeable = false,                           -- Optional
+    
+        bVisibleToEnemies = true,                         -- Optional
+        bProvidesVision = false,                           -- Optional
+        --iVisionRadius = projectile_vision,                              -- Optional
+        --iVisionTeamNumber = caster:GetTeamNumber(),        -- Optional
+        ExtraData = {
+            key = key,
+        }
+    }
+    projectile_info = self:GetAbility():PlayProjectile( projectile_info )
+    castTable.projectile = projectile_info
+    ProjectileManager:CreateTrackingProjectile( castTable.projectile )
+
+    -- 音效播放
+    local sound_cast = "Hero_WitchDoctor_Ward.Attack"
+    EmitSoundOn( sound_cast, caster )
 end

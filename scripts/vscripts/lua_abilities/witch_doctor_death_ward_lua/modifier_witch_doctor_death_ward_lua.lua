@@ -75,8 +75,8 @@ function modifier_witch_doctor_death_ward_lua:OnCreated( kv )
     if not IsServer() then return end
     if kv.createOnSpellStart then
         self:CreateWard()
-        self.death_ward:SetBaseDamageMin(self.damage)
-        self.death_ward:SetBaseDamageMax(self.damage)
+        --self.death_ward:SetBaseDamageMin(self.damage)
+        --self.death_ward:SetBaseDamageMax(self.damage)
     end
 end
 
@@ -126,10 +126,9 @@ function modifier_witch_doctor_death_ward_lua:CreateWard()
         "modifier_witch_doctor_death_ward_lua_effect",
         {
             attack_range = self.attack_range_tooltip,
+            delay = 0.22, -- 攻击间隔
         } -- kv
     )
-
-    -- 死亡守卫每隔一段时间要找最近的单位攻击，死亡守卫的攻击特效是由死亡守卫自身决定的。
 
     -- 死亡守卫的所有效果会在修改器移除时移除
     -- 创建光晕效果

@@ -249,7 +249,8 @@
 	{
 		// General
 		//----------------------------------------------------------------
-		"BaseClass"					"npc_dota_witch_doctor_death_ward"	// Class of entity of link to.
+		"vscripts"					"lua_abilities/witch_doctor_death_ward_lua/npc_dota_witch_doctor_death_ward_lua.lua"
+		"BaseClass"					"npc_dota_creature"	// Class of entity of link to.
 		"Model"						"models/heroes/witchdoctor/witchdoctor_ward.vmdl"// Model.
 		"SoundSet"					"Hero_WitchDoctor_Ward"					// Name of sound set.
 		"Level"						"3"

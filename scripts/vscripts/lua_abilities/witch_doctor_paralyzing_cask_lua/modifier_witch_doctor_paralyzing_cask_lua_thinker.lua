@@ -36,9 +36,10 @@ function modifier_witch_doctor_paralyzing_cask_lua_thinker:OnDestroy( kv )
 		local castTable = tempTable:GetATValue( self.key )
 
 		-- update values
-		if not castTable.scepter then
+		-- 移除巫妖残留的蓝杖逻辑
+		--if not castTable.scepter then
 			castTable.jump = castTable.jump + 1
-		end
+		--end
 
 		if castTable.jump>castTable.jumps then
 			-- stop bouncing

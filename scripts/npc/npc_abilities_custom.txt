@@ -1204,8 +1204,8 @@
 		"precache"
 		{
 			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_witchdoctor.vsndevts"
-			"particle"	"particles/units/heroes/hero_witchdoctor/witchdoctor_maledict.vpcf"
-            "particle"  "particles/units/heroes/hero_witchdoctor/witchdoctor_maledict_dot.vpcf"
+			//"particle"	"particles/units/heroes/hero_witchdoctor/witchdoctor_maledict.vpcf"
+            //"particle"  "particles/units/heroes/hero_witchdoctor/witchdoctor_maledict_dot.vpcf"
 		}
 
         "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
@@ -1273,6 +1273,81 @@
 				"bonus_accuracy"			"50"
 			}
 		}
+	}
+
+	//=================================================================================================================
+	// Witch Doctor: Voodoo Switcheroo (Shard Ability) 巫毒变身术
+	//=================================================================================================================
+	"witch_doctor_voodoo_switcheroo_lua"
+	{
+		//-------------------------------------------------------------------------------------------------------------
+		// Ability Technical Aspect
+		// base script folder	: scripts/vscripts
+		// base texture folder	: resource/flash3/images/spellicons
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"lua_abilities/witch_doctor_voodoo_switcheroo_lua/witch_doctor_voodoo_switcheroo_lua"
+		"AbilityTextureName"			"witch_doctor_voodoo_switcheroo"
+		"precache"
+		{
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_witchdoctor.vsndevts"
+			//"particle"	"particles/units/heroes/hero_witchdoctor/witchdoctor_maledict.vpcf"
+            //"particle"  "particles/units/heroes/hero_witchdoctor/witchdoctor_maledict_dot.vpcf"
+		}
+		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES"
+		"MaxLevel"						"1"
+		"IsGrantedByShard"				"1"
+	
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.1"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"40"
+
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"150"
+
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"		"3"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"attack_speed_reduction"		"30"
+			}
+
+			// 这里不知道如何获取另一个技能（死亡守卫）的参数配置，先单独配置吧
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bounce_radius"				"650 650 650"
+				"RequiresScepter"		"1"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage"					"90 150 210"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_accuracy"			"50"
+			}
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_3"
 	}
 }
 

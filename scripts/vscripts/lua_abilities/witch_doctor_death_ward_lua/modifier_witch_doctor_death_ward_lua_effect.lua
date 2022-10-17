@@ -69,6 +69,7 @@ function modifier_witch_doctor_death_ward_lua_effect:CheckState()
         [MODIFIER_STATE_UNTARGETABLE] = true, -- 不能作为目标的
         [MODIFIER_STATE_ROOTED] = true, -- 不能移动
         [MODIFIER_STATE_DISARMED] = true, -- 缴械，发现生物基类的情况下会对目标普攻
+        [MODIFIER_STATE_NO_UNIT_COLLISION] = true, -- 没有单位碰撞
 	}
 
 	return state

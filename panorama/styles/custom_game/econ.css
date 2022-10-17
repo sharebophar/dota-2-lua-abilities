@@ -1,0 +1,155 @@
+
+ #QRCodePanel{
+
+     margin-top: 15px;
+     width: 500px;
+     height: 535px;
+     horizontal-align: middle;
+     vertical-align: top;
+ }
+
+ .PrismaticPreview{
+
+     width: 390px;
+     height: 260px;
+     horizontal-align: middle;
+     vertical-align: top;
+ }
+
+ .EtherealPreview{
+
+     width: 220px;
+     height: 200px;
+     margin-top: 270px;
+     horizontal-align: middle;
+     vertical-align: top;
+ }
+
+ #GemTip{
+
+     color: #aaa;
+     text-align: center;
+     horizontal-align: middle;
+     vertical-align: bottom;
+     font-size: 20px;
+     margin-bottom: -20px;
+ }
+
+ #QRCode{
+
+     width: 100%;
+     height: 100%;
+     horizontal-align: middle;
+     vertical-align: middle;
+     visibility: collapse;
+ }
+
+ #EconPanel{
+
+     width: 70%;
+     height: 95%;
+     z-index: 60;
+     flow-children: down;
+     horizontal-align: middle;
+     background-color: black;
+  background-image: url("s2r://panorama/images/hud/reborn/bg_hud_inspect_psd.vtex");
+  background-size: cover;
+
+     box-shadow: #000000 -12px -12px 24px 24px;
+     margin-top: 20px;
+     opacity: 0.98;
+ }
+
+ .Wechat{
+
+     background-color: white;
+
+     background-image: url("s2r://panorama/images/wechat_png.vtex");
+     background-repeat: no-repeat;
+     background-position: center;
+     height: 55px;
+     width: 163px;
+     border-radius: 8px;
+     margin: 15px;
+ }
+
+ .Alipay{
+
+     background-color: white;
+     background-image: url("s2r://panorama/images/alipay_png.vtex");
+
+     background-repeat: no-repeat;
+     background-position: center;
+     height: 55px;
+     width: 150px;
+     border-radius: 8px;
+     margin: 15px;
+ }
+
+ .PayButtons{
+
+     flow-children: right;
+     horizontal-align: middle;
+ }
+
+
+ #PayOptionPanel{
+
+     width: 90%;
+     horizontal-align: middle;
+     margin-left: 20px;
+     margin-top: 15px;
+ }
+
+ .OptionsCheckBox{
+
+     width: 33%;
+ }
+
+ .OptionsCheckBox Label{
+
+     font-size:  20px;
+ }
+
+ .OptionsCheckBox .RadioBox{
+
+     margin-left: 10px;
+ }
+
+ #PayTip{
+
+  color: #aaa;
+  margin-top: 15px;
+     text-align: center;
+     horizontal-align: middle;
+     width: 93%;
+     height: 150px;
+ }
+
+ #ExperiationDate{
+
+     width: 300px;
+     text-align: right;
+     horizontal-align: right;
+     vertical-align: top;
+     z-index: 60;
+     font-size: 20px;
+     margin-top: -25px;
+     margin-right: 15px;
+     color: white;
+     visibility: collapse;
+ }
+
+ #RefreshButton{
+
+     background-size: 100%;
+     background-image: url("s2r://panorama/images/control_icons/refresh_psd.vtex");
+     background-repeat: no-repeat;
+     background-position: center;
+     horizontal-align: middle;
+     vertical-align: middle;
+     height: 80px;
+     width: 80px;
+     border-radius: 8px;
+     margin: 15px;
+}

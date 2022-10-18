@@ -1,0 +1,1 @@
+phoenix_sun_ray_lua = class({})

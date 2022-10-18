@@ -1,0 +1,1 @@
+phoenix_icarus_dive_lua = class({})

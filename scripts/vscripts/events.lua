@@ -457,6 +457,9 @@ function CHeroDemo:OnChangeHeroButtonPressed(eventSourceIndex, data)
 end
 
 function CHeroDemo:OnSpawnAllyButtonPressed(eventSourceIndex, data)
+
+    -- 遗迹暖暖的创建友方带有外观数据
+    --[[
     self.m_sHeroToSpawn = DOTAGameManager:GetHeroUnitNameByID(tonumber(data.sHeroID))
 
     -- if #self.m_tEnemiesList >= 100 then
@@ -530,6 +533,40 @@ function CHeroDemo:OnSpawnAllyButtonPressed(eventSourceIndex, data)
     )
 
     Wearable:UICacheAvailableItems(unit_name)
+]]
+    -- 我们直接按照创建敌方英雄的方式创建
+    self.m_sHeroToSpawn = DOTAGameManager:GetHeroUnitNameByID(tonumber(data.sHeroID))
+
+    if #self.m_tAlliesList >= 100 then
+        -- self:BroadcastMsg("#MaxEnemies_Msg")
+        return
+    end
+
+    local hPlayer = PlayerResource:GetPlayer(data.PlayerID)
+    local hPlayerHero = PlayerResource:GetSelectedHeroEntity(data.PlayerID)
+    local hSelectedUnit = EntIndexToHScript(data.nSelectedUnit)
+
+    CreateUnitByNameAsync(
+        self.m_sHeroToSpawn,
+        hSelectedUnit:GetAbsOrigin(),
+        true,
+        nil,
+        nil,
+        hPlayer:GetTeam(),
+        function(hUnit)
+            table.insert(self.m_tAlliesList, hUnit)
+            hUnit:SetOwner(hPlayerHero)
+            hUnit:SetControllableByPlayer(data.PlayerID, false)
+            hUnit:SetRespawnPosition(hSelectedUnit:GetAbsOrigin())
+            FindClearSpaceForUnit(hUnit, hSelectedUnit:GetAbsOrigin(), false)
+            hUnit:Hold()
+            hUnit:SetIdleAcquire(false)
+            hUnit:SetAcquisitionRange(0)
+            hUnit.sHeroName = self.m_sHeroToSpawn
+            self:BroadcastMsg("#SpawnAlly_Msg")
+            CustomGameEventManager:Send_ServerToPlayer(hPlayer, "SelectAndLookUnit", {unit = hUnit:GetEntityIndex()})
+        end
+    )
 end
 
 function CHeroDemo:OnPauseButtonPressed(eventSourceIndex)
@@ -620,7 +657,7 @@ end
 function CHeroDemo:OnCopySelection(eventSourceIndex, data)
     local nEntityIndex = data.unit
     local hUnitOrigin = EntIndexToHScript(nEntityIndex)
-
+    print("------------sHeroName",hUnitOrigin.sHeroName)
     if hUnitOrigin.sHeroName then
         local sUnitName = hUnitOrigin.sUnitName
         local hPlayer = hUnitOrigin:GetPlayerOwner()
@@ -638,6 +675,8 @@ function CHeroDemo:OnCopySelection(eventSourceIndex, data)
             end
             sSpawnUnitName = Wearable:GetRepawnUnitName(hUnitOrigin.sHeroName, hNewWears)
         end
+
+        print("------------sSpawnUnitName",sSpawnUnitName)
 
         CreateUnitByNameAsync(
             sSpawnUnitName,

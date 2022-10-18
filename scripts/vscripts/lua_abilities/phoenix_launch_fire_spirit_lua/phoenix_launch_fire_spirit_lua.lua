@@ -1,0 +1,1 @@
+phoenix_launch_fire_spirit_lua = class({})

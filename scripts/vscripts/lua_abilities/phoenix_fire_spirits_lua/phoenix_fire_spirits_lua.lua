@@ -1,0 +1,1 @@
+phoenix_fire_spirits_lua = class({})

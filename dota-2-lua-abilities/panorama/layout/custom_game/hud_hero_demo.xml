@@ -218,11 +218,11 @@
 								<Label text="#ChangeHero_Button" />
 							</Button>
 						</Panel>
-						<Panel class="Row">
+						<!--Panel class="Row">
 							<Button class="DemoButton" onactivate="CopySelection()">
 								<Label text="#CopySelection_Button" />
 							</Button>
-						</Panel>
+						</Panel-->
 						<Panel class="Row">
 							<Button class="DemoButton" onactivate="ToggleEnemyHeroPicker()">
 								<Label text="#SelectHero_Button" />

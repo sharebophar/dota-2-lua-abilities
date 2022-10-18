@@ -1,0 +1,1 @@
+phoenix_sun_ray_toggle_move_lua = class({})

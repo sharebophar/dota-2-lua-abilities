@@ -10,14 +10,14 @@
 
 		//-------------------------------------------------------------------------------------------------------------
 		// Ability Override
-		//"Ability1"		"phoenix_icarus_dive_lua"           // 凤凰冲击
-		//"Ability2"		"phoenix_fire_spirits_lua"          // 烈火精灵
-		//"Ability3"		"phoenix_sun_ray_lua"               // 射线
-		//"Ability4"		"phoenix_sun_ray_toggle_move_lua"   // 射线移动开关
+		"Ability1"		"phoenix_icarus_dive_lua"           // 凤凰冲击
+		"Ability2"		"phoenix_fire_spirits_lua"          // 烈火精灵
+		"Ability3"		"phoenix_sun_ray_lua"               // 射线
+		"Ability4"		"phoenix_sun_ray_toggle_move_lua"   // 射线移动开关
 		"Ability5"		"generic_hidden"
-		//"Ability6"		"phoenix_supernova_lua"             // 超新星
-		//"Ability7"		"phoenix_launch_fire_spirit_lua"    // 执行凤凰冲击
-		//"Ability8"		"phoenix_icarus_dive_stop_lua"      // 凤凰冲击停止
-		//"Ability9"		"phoenix_sun_ray_stop_lua"          // 射线停止
+		"Ability6"		"phoenix_supernova_lua"             // 超新星
+		"Ability7"		"phoenix_launch_fire_spirit_lua"    // 发射烈火精灵
+		"Ability8"		"phoenix_icarus_dive_stop_lua"      // 凤凰冲击停止
+		"Ability9"		"phoenix_sun_ray_stop_lua"          // 射线停止
 	}
 }

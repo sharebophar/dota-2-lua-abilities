@@ -1,0 +1,1 @@
+phoenix_supernova_lua = class({})

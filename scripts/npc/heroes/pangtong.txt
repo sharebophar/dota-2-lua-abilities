@@ -19,5 +19,6 @@
 		"Ability7"		"phoenix_launch_fire_spirit_lua"    // 发射烈火精灵
 		"Ability8"		"phoenix_icarus_dive_stop_lua"      // 凤凰冲击停止
 		"Ability9"		"phoenix_sun_ray_stop_lua"          // 射线停止
+		
 	}
 }

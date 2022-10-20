@@ -46,22 +46,12 @@ function modifier_phoenix_icarus_dive_lua:OnCreated( kv )
 
 	self:StartIntervalThink(self.think_tick)
 	self:OnIntervalThink()
-
-	-- 移动轨迹要自己计算
-	--[[
-	self.target = Vector( kv.pos_x, kv.pos_y, 0 )
-
-	-- get speed
-	local dist = (self:GetParent():GetOrigin()-self.target):Length2D()
-	self.speed = kv.pull/100*dist/kv.duration
-
-	if not self:GetParent():IsHero() then
-		self.speed = nil
+	
+	-- 禁用烈日炙烤
+	local brother_ability = self:GetCaster():FindAbilityByName("phoenix_sun_ray_lua")
+	if brother_ability then
+    	brother_ability:SetActivated(false)
 	end
-
-	-- issue a move command
-	self:GetParent():MoveToPosition( self.target )
-	]]
 end
 
 function modifier_phoenix_icarus_dive_lua:OnRefresh( kv )
@@ -70,6 +60,11 @@ function modifier_phoenix_icarus_dive_lua:OnRefresh( kv )
 end
 
 function modifier_phoenix_icarus_dive_lua:OnRemoved()
+	-- 启用烈日炙烤
+	--local brother_ability = self:GetCaster():FindAbilityByName("phoenix_sun_ray_lua")
+	--if brother_ability then
+    --	brother_ability:SetActivated(true)
+	--end
 end
 
 function modifier_phoenix_icarus_dive_lua:OnDestroy()
@@ -81,9 +76,16 @@ end
 function modifier_phoenix_icarus_dive_lua:DeclareFunctions()
 	local funcs = {
 		MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE,
+		MODIFIER_EVENT_ON_ORDER,
 	}
 
 	return funcs
+end
+
+function modifier_phoenix_icarus_dive_lua:OnOder(event)
+	if event.order_type == DOTA_UNIT_ORDER_MOVE_TO_POSITION or event.order_type == DOTA_UNIT_ORDER_MOVE_TO_TARGET then
+
+	end
 end
 
 function modifier_phoenix_icarus_dive_lua:GetModifierMoveSpeed_Absolute()
@@ -94,7 +96,8 @@ end
 function modifier_phoenix_icarus_dive_lua:CheckState()
 	local state = {
 		-- [MODIFIER_STATE_COMMAND_RESTRICTED] = true, -- 不能放技能
-		[MODIFIER_STATE_IGNORING_MOVE_AND_ATTACK_ORDERS] = true,
+		[MODIFIER_STATE_IGNORING_MOVE_AND_ATTACK_ORDERS] = true, -- 不能攻击
+		-- [MODIFIER_STATE_ROOTED] = true, -- 不是禁止移动，是禁止执行移动指令；飞行中能攻击
 		[MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY] = true,
 		[MODIFIER_STATE_ALLOW_PATHING_THROUGH_FISSURE] = true,
 	}
@@ -122,8 +125,16 @@ function modifier_phoenix_icarus_dive_lua:OnIntervalThink()
 		self.tick_cur_times = self.tick_cur_times + 1
 	else
 		self:StartIntervalThink(-1)
-		self:GetParent():SwapAbilities("phoenix_icarus_dive_lua","phoenix_icarus_dive_stop_lua",true,false)
+		self:OnModifierFinish()
 	end
+end
+
+function modifier_phoenix_icarus_dive_lua:OnModifierFinish()
+	local brother_ability = self:GetCaster():FindAbilityByName("phoenix_sun_ray_lua")
+	if brother_ability then
+    	brother_ability:SetActivated(true)
+	end
+	self:GetParent():SwapAbilities("phoenix_icarus_dive_lua","phoenix_icarus_dive_stop_lua",true,false)
 end
 
 

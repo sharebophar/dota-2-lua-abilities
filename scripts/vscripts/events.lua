@@ -40,7 +40,7 @@ function CHeroDemo:OnNPCSpawned(event)
     end
 
     -- 服装师
-    if spawnedUnit:GetUnitName() == "npc_dota_hero_witch_doctor" then
+    if spawnedUnit:GetUnitName() == "npc_dota_hero_witch_doctor" or spawnedUnit:GetUnitName() == "npc_dota_hero_phoenix" then
         spawnedUnit:SetAbilityPoints(30)
         --spawnedUnit:AddNewModifier(spawnedUnit, nil, "dresser", nil)
         --spawnedUnit:FindAbilityByName("day"):SetLevel(1)

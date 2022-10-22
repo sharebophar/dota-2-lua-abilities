@@ -20,5 +20,5 @@ end
 
 function phoenix_fire_spirits_lua:OnUpgrade()
     local sister_ability = self:GetCaster():FindAbilityByName("phoenix_launch_fire_spirit_lua")
-    sister_ability:UpgradeAbility(true)
+    sister_ability:SetLevel(1)
 end

@@ -109,11 +109,14 @@ function witch_doctor_death_ward_lua:PlayProjectile( info )
 		-- 持续4秒
 		{ duration = 4 } -- kv
 	)
-	tracker:PlayTrackingProjectile( info )
-	
-	info.EffectName = nil
-	if not info.ExtraData then info.ExtraData = {} end
-	info.ExtraData.tracker = tempTable:AddATValue( tracker )
+	-- tracker 有可能为空，比如凤凰被攻击的过程中重生了
+	if tracker then
+		tracker:PlayTrackingProjectile( info )
+		
+		info.EffectName = nil
+		if not info.ExtraData then info.ExtraData = {} end
+		info.ExtraData.tracker = tempTable:AddATValue( tracker )
+	end
 
 	return info
 end

@@ -81,7 +81,7 @@ end
 --------------------------------------------------------------------------------
 -- Graphics & Animations
 function modifier_phoenix_fire_spirits_lua:GetStatusEffectName()
-	-- return "particles/status_fx/status_effect_void_spirit_aether_remnant.vpcf"
+	-- return "particles/status_fx/particles/status_fx/status_effect_phoenix_burning.vpcf"
 end
 
 function modifier_phoenix_fire_spirits_lua:StatusEffectPriority()

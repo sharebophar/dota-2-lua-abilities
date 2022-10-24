@@ -24,10 +24,12 @@ function modifier_phoenix_supernova_lua_hide_effect:CheckState()
 	{
 		[MODIFIER_STATE_INVULNERABLE] = true,
 		[MODIFIER_STATE_DISARMED] = true,
-		[MODIFIER_STATE_ROOTED] = true,
+		--[MODIFIER_STATE_ROOTED] = true,
 		[MODIFIER_STATE_MUTED] = true,
+        [MODIFIER_STATE_UNSELECTABLE] = true,
+		[MODIFIER_STATE_UNTARGETABLE] = true,
 		[MODIFIER_STATE_STUNNED] = true,
-		[MODIFIER_STATE_MAGIC_IMMUNE] = true,
+		--[MODIFIER_STATE_MAGIC_IMMUNE] = true,
 		[MODIFIER_STATE_OUT_OF_GAME] = true,
 	}
 	return state

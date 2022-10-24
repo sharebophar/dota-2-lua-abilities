@@ -2,98 +2,58 @@
 modifier_phoenix_fire_spirits_lua = class({})
 
 --------------------------------------------------------------------------------
--- Classifications
-function modifier_phoenix_fire_spirits_lua:IsHidden()
-	return false
+function modifier_phoenix_fire_spirits_lua:IsDebuff()			return false end
+function modifier_phoenix_fire_spirits_lua:IsHidden() 			return false end
+function modifier_phoenix_fire_spirits_lua:IsPurgable() 			return false end
+function modifier_phoenix_fire_spirits_lua:IsPurgeException() 	return false end
+function modifier_phoenix_fire_spirits_lua:IsStunDebuff() 		return false end
+function modifier_phoenix_fire_spirits_lua:RemoveOnDeath() 		return true  end
+
+function modifier_phoenix_fire_spirits_lua:GetTexture()
+	return "phoenix_fire_spirits"
 end
 
-function modifier_phoenix_fire_spirits_lua:IsDebuff()
-	return true
-end
-
-function modifier_phoenix_fire_spirits_lua:IsStunDebuff()
-	return true
-end
-
-function modifier_phoenix_fire_spirits_lua:IsPurgable()
-	return true
-end
-
---------------------------------------------------------------------------------
--- Initializations
-function modifier_phoenix_fire_spirits_lua:OnCreated( kv )
-	-- references
-	if not IsServer() then return end
-	self.tick_cur_times = 1
-    self.hp_cost_perc = self:GetAbility():GetSpecialValueFor("hp_cost_perc")
-    self.spirit_duration = self:GetAbility():GetSpecialValueFor("spirit_duration")
-    self.spirit_speed = self:GetAbility():GetSpecialValueFor("spirit_speed")
-    self.radius = self:GetAbility():GetSpecialValueFor("radius")
-	self.duration = self:GetAbility():GetSpecialValueFor("duration")
-    self.attackspeed_slow = self:GetAbility():GetSpecialValueFor("attackspeed_slow")
-    self.damage_per_second = self:GetAbility():GetSpecialValueFor("damage_per_second")
-    self.spirit_count = self:GetAbility():GetSpecialValueFor("spirit_count")
-    self.tick_interval = self:GetAbility():GetSpecialValueFor("tick_interval")
--- 创建火焰精灵环绕特效
-
-	self:StartIntervalThink(self.tick_interval)
-	self:OnIntervalThink()
-end
-
-function modifier_phoenix_fire_spirits_lua:OnRefresh( kv )
-	-- self:OnCreated( kv )
-	-- Refresh时，只更新配置数值
-end
-
-function modifier_phoenix_fire_spirits_lua:OnRemoved()
-end
-
-function modifier_phoenix_fire_spirits_lua:OnDestroy()
-	self:StartIntervalThink(-1)
-end
-
---------------------------------------------------------------------------------
---[[ Modifier Effects
-function modifier_phoenix_fire_spirits_lua:DeclareFunctions()
-	local funcs = {
-		MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE,
-	}
-
-	return funcs
-end
-
-function modifier_phoenix_fire_spirits_lua:GetModifierMoveSpeed_Absolute()
-	if IsServer() then return self.speed end
-end
-]]
---------------------------------------------------------------------------------
--- Status Effects
-function modifier_phoenix_fire_spirits_lua:CheckState()
-	local state = {
-		-- [MODIFIER_STATE_COMMAND_RESTRICTED] = true, -- 不能放技能
-		--[MODIFIER_STATE_IGNORING_MOVE_AND_ATTACK_ORDERS] = true,
-		--[MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY] = true,
-	}
-
-	return state
-end
-
---------------------------------------------------------------------------------
--- Graphics & Animations
-function modifier_phoenix_fire_spirits_lua:GetStatusEffectName()
-	-- return "particles/status_fx/particles/status_fx/status_effect_phoenix_burning.vpcf"
-end
-
-function modifier_phoenix_fire_spirits_lua:StatusEffectPriority()
-	return MODIFIER_PRIORITY_NORMAL
+function modifier_phoenix_fire_spirits_lua:OnCreated()
+	if not IsServer() then
+		return
+	end
+	self:StartIntervalThink(1.0)
 end
 
 function modifier_phoenix_fire_spirits_lua:OnIntervalThink()
+	if not IsServer() then
+		return
+	end
+	local caster = self:GetCaster()
+	local ability = caster:FindAbilityByName("phoenix_launch_fire_spirit_lua")
+	local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
+		caster:GetAbsOrigin(),
+		nil,
+		192,
+		DOTA_UNIT_TARGET_TEAM_ENEMY,
+		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+		DOTA_UNIT_TARGET_FLAG_NONE,
+		FIND_ANY_ORDER,
+		false)
+	-- 斧王岛最新测试发现靠近不会造成伤害了
+	for _, enemy in pairs(enemies) do
+		-- enemy:AddNewModifier(caster, ability, "modifier_phoenix_fire_spirits_lua_debuff", { duration = ability:GetSpecialValueFor("duration") * (1 - enemy:GetStatusResistance()) } )
+	end
+end
 
-	if self.tick_cur_times <= self.spirit_duration then
-		self.tick_cur_times = self.tick_cur_times + 1
-	else
-		self:StartIntervalThink(-1)
-		self:GetParent():SwapAbilities("phoenix_fire_spirits_lua","phoenix_launch_fire_spirit_lua",true,false)
+function modifier_phoenix_fire_spirits_lua:OnDestroy()
+	if not IsServer() then
+		return
+	end
+	local caster = self:GetCaster()
+	local pfx = caster.fire_spirits_pfx
+	if pfx then
+		ParticleManager:DestroyParticle( pfx, false )
+		ParticleManager:ReleaseParticleIndex( pfx )
+	end
+	local main_ability_name	= "phoenix_fire_spirits_lua"
+	local sub_ability_name	= "phoenix_launch_fire_spirit_lua"
+	if caster then
+		caster:SwapAbilities( main_ability_name, sub_ability_name, true, false )
 	end
 end

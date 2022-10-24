@@ -1,0 +1,90 @@
+// Dota Heroes File
+"DOTAAbilities"
+{
+    //-------------------------------------------------------------------------------------------------------------
+    // Ability Technical Aspect
+    // base script folder	: scripts/vscripts
+    // base texture folder	: resource/flash3/images/spellicons
+    //-------------------------------------------------------------------------------------------------------------
+    "BaseClass"						"ability_lua"
+    "ScriptFile"					"lua_abilities/phoenix_fire_spirits_lua/phoenix_fire_spirits_lua"
+    "AbilityTextureName"			"phoenix_fire_spirits"
+    "precache"
+    {
+        "soundfile"		"soundevents/game_sounds_heroes/game_sounds_phoenix.vsndevts"
+        //"particle"	"particles/units/heroes/hero_witchdoctor/witchdoctor_maledict.vpcf"
+    }
+    
+    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+    "AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+    "SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+    "SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+    "FightRecapLevel"				"1"
+    "AbilitySound"					"Hero_Phoenix.FireSpirits.Cast"
+
+    // Casting
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+    "AbilityCastGestureSlot"		"DEFAULT"
+    "AbilityCastRange"				"1400"
+    
+    // Time		
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilityCooldown"				"50 40 30 20"
+
+    // Cost
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilityManaCost"				"100"
+
+    // Special
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"			"FIELD_INTEGER"
+            "hp_cost_perc"		"20"
+        }
+        "02"
+        {
+            "var_type"			"FIELD_FLOAT"
+            "spirit_duration"	"20"
+        }
+        "03"
+        {	
+            "var_type"			"FIELD_INTEGER"
+            "spirit_speed"		"900 900 900 900"
+        }
+        "04"
+        {
+            "var_type"			"FIELD_INTEGER"
+            "radius"			"200"
+        }
+        "05"
+        {
+            "var_type"			"FIELD_FLOAT"
+            "duration"			"4.0"
+        }
+        "06"
+        {
+            "var_type"			"FIELD_INTEGER"
+            "attackspeed_slow"	"-80 -100 -120 -140"
+        }
+        "07"
+        {
+            "var_type"			"FIELD_INTEGER"
+            "damage_per_second"				"20 40 60 80"
+            "LinkedSpecialBonus"	"special_bonus_unique_phoenix_3"
+        }
+        "08"
+        {
+            "var_type"			"FIELD_INTEGER"
+            "spirit_count"		"5"
+        }
+        "09"
+        {
+            "var_type"			"FIELD_FLOAT"
+            "tick_interval"		"1.0"
+        }
+    }
+}

@@ -1668,6 +1668,29 @@
 				"shard_move_slow_pct"			"12"
 				"RequiresShard"				"1"
 			}
+			//来自维基的数据
+			//烈日炙烤每0.2秒增加0.47/0.67/0.87/1.07+目标最大生命值0.03%/0.09%/0.15%/0.21%(天赋 0.08%/0.14%/0.2%/0.26%)的伤害。（伤害减免前）
+			"12"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"inc_dmg_per_tick"		"0.47 0.67 0.87 1.07"
+			}
+			"13"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"inc_dmg_pct_per_tick"		"0.03 0.09 0.15 0.21"
+			}
+			//烈日炙烤每0.2秒增加0.23/0.33/0.43/0.53+目标最大生命值0.017%/0.033%/0.05%/0.067%的治疗。
+			"14"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"inc_heal_per_tick"			"0.23 0.33 0.43 0.53"
+			}
+			"13"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"inc_heal_pct_per_tick"		"0.017 0.033 0.05 0.067"
+			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_3"
 	}
